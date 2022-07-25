@@ -34,8 +34,8 @@ ng g c controls/ng-calendar --module corelib --skip-tests --style css --inline-t
 
 ng g m features/posts --module app --routing --route posts --dry-run
 
-sudo npm i --save @angular/animations @angular/common @angular/compiler @angular/core @angular/forms @angular platform-browser @angular/platform-browser-dynamic @angular/router corelib: file:dist/corelib rxjs tslib zone.js
+npm i -D @angular-devkit/build-angular @angular/cli @angular/compiler-cli @types/jasmine @types/node jasmine-core karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter ng-packagr typescript
 
-sudo npm i --save-dev @angular-devkit/build-angular @angular/cli @angular/compiler-cli @angular/language-service @types/jasmine @types/node angular-in-memory-web-api jasmine-core karma karma-chrome-launcher karma coverage karma-jasmine karma-jasmine-html-reporter ng-packagr typescript
+npm i @angular/animations @angular/common @angular/compiler @angular/core @angular/forms @angular/platform-browser @angular/platform-browser-dynamic @angular/router rxjs tslib zone.js 
 
-sudo npm i --save @angular/cdk @angular/common @angular/core ag-grid-angular ag-grid-community primeflex primeicons primeng quill tslib
+sudo npm i --save @angular/cdk @angular/common @angular/core @angular/material tslib
