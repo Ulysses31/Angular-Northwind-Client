@@ -1,0 +1,16 @@
+{
+  "name": "corelib",
+  "version": "0.0.1",
+  "scripts": {
+    "lib": "ng build corelib --watch"
+  },
+  "peerDependencies": {
+    "@angular/cdk": "^14.1.0",
+    "@angular/common": "^14.1.0",
+    "@angular/core": "^14.1.0",
+    "@angular/material": "^14.1.0"
+  },
+  "dependencies": {
+    "tslib": "^2.4.0"
+  }
+}
