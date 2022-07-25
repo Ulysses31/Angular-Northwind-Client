@@ -1,6 +1,6 @@
 # Corelib
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.0.
 
 ## Code scaffolding
 
@@ -22,3 +22,20 @@ Run `ng test corelib` to execute the unit tests via [Karma](https://karma-runner
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+ng new my-workspace --no-create-application
+cd my-workspace
+ng generate library my-lib
+ng g application testapp --style css --no-routing
+
+npm -i --save "file:./dist/corelib"
+
+ng g c controls/ng-calendar --module corelib --skip-tests --style css --inline-template
+
+ng g m features/posts --module app --routing --route posts --dry-run
+
+sudo npm i --save @angular/animations @angular/common @angular/compiler @angular/core @angular/forms @angular platform-browser @angular/platform-browser-dynamic @angular/router corelib: file:dist/corelib rxjs tslib zone.js
+
+sudo npm i --save-dev @angular-devkit/build-angular @angular/cli @angular/compiler-cli @angular/language-service @types/jasmine @types/node angular-in-memory-web-api jasmine-core karma karma-chrome-launcher karma coverage karma-jasmine karma-jasmine-html-reporter ng-packagr typescript
+
+sudo npm i --save @angular/cdk @angular/common @angular/core ag-grid-angular ag-grid-community primeflex primeicons primeng quill tslib
