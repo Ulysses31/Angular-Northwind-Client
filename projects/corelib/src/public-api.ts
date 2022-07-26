@@ -4,6 +4,7 @@
 
 export * from './lib/corelib.module';
 export * from './lib/models/enums';
+export * from './lib/models/base-entity';
 export * from './lib/interfaces/mtToggleBtnGroup';
 export * from './lib/interfaces/mtDialogActionsContent';
 export * from './lib/interfaces/mtCardActionsContent';
@@ -49,3 +50,5 @@ export * from './lib/controls/mt-table/mt-table.component';
 export * from './lib/controls/mt-tree/mt-tree.component';
 export * from './lib/controls/mt-layout/mt-layout.component';
 export * from './lib/controls/mt-toolbar/mt-toolbar.component';
+export * from './lib/controls/mt-paged-list-full/mt-paged-list-full.component';
+export * from './lib/controls/mt-single-full/mt-single-full.component';

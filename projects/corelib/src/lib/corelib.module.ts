@@ -63,6 +63,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MtTreeComponent } from './controls/mt-tree/mt-tree.component';
 import { MtLayoutComponent } from './controls/mt-layout/mt-layout.component';
 import { MtToolbarComponent } from './controls/mt-toolbar/mt-toolbar.component';
+import { MtPagedListFullComponent } from './controls/mt-paged-list-full/mt-paged-list-full.component';
+import { MtSingleFullComponent } from './controls/mt-single-full/mt-single-full.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +103,9 @@ import { MtToolbarComponent } from './controls/mt-toolbar/mt-toolbar.component';
     MtTableComponent,
     MtTreeComponent,
     MtLayoutComponent,
-    MtToolbarComponent
+    MtToolbarComponent,
+    MtPagedListFullComponent,
+    MtSingleFullComponent
   ],
   imports: [
     CommonModule,
@@ -169,7 +173,9 @@ import { MtToolbarComponent } from './controls/mt-toolbar/mt-toolbar.component';
     MtTableComponent,
     MtTreeComponent,
     MtLayoutComponent,
-    MtToolbarComponent
+    MtToolbarComponent,
+    MtPagedListFullComponent,
+    MtSingleFullComponent
   ],
   providers: [],
 })
