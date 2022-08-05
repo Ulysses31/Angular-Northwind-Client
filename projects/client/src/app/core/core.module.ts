@@ -1,11 +1,14 @@
+import { SharedModule } from './../shared/shared.module';
 import { CoreComponent } from './core.component';
 import { CoreRoutingModule } from './core-routing.module';
-// import { MenuBarModule } from './../layout/menubar/menubar.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MenuBarModule } from '../layout/menubar/menubar.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { BrowserModule } from '@angular/platform-browser';
     HttpClientModule,
     BrowserAnimationsModule,
     CoreRoutingModule,
-    // MenuBarModule,
+    SharedModule,
+    MenuBarModule,
+    MatSidenavModule,
+    MatIconModule
   ],
   exports: []
 })

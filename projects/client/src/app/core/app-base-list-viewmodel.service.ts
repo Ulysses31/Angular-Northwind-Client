@@ -9,6 +9,7 @@ export abstract class AppBaseListViewModelService<
 
   constructor() {
     super();
+    console.log('[OnInit AppBaseListViewModelService]');
   }
 
   override ngOnInit(): void {

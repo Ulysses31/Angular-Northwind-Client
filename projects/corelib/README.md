@@ -32,7 +32,7 @@ npm -i --save "file:./dist/corelib"
 
 ng g c controls/ng-calendar --module corelib --skip-tests --style css --inline-template
 
-ng g m features/posts --module app --routing --route posts --dry-run
+ng g m features/posts --module core --routing --route posts --dry-run
 
 npm i -D @angular-devkit/build-angular @angular/cli @angular/compiler-cli @types/jasmine @types/node jasmine-core karma karma-chrome-launcher karma-coverage karma-jasmine karma-jasmine-html-reporter ng-packagr typescript
 

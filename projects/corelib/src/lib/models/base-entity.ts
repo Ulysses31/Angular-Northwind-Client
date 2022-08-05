@@ -1,3 +1,6 @@
 export interface MtBaseEntity {
-  id?: string;
+	id?: string;
+	// CreatedBy?: null | string;
+	// CreatedAt?: Date;
+	// UpdatedAt?: Date;
 }

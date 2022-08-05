@@ -8,7 +8,10 @@ export * from './lib/models/base-entity';
 export * from './lib/interfaces/mtToggleBtnGroup';
 export * from './lib/interfaces/mtDialogActionsContent';
 export * from './lib/interfaces/mtCardActionsContent';
-
+export * from './lib/interfaces/mtSidebarMenuItems';
+// export * from './lib/interfaces/mtApiService';
+// export * from './lib/viewmodel/paged-list-viewmodel.service';
+// export * from './lib/viewmodel/single-viewmodel.service';
 
 /*
  * Components

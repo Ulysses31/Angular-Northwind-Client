@@ -1,25 +1,26 @@
 import {
-  Directive,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  AfterViewInit,
+	Directive,
+	OnInit,
+	OnDestroy,
+	ViewChild,
+	AfterViewInit
 } from '@angular/core';
 import { MtPagedListFullComponent } from 'corelib';
 
 @Directive()
 export abstract class AppBaseListComponent
-  implements OnInit, AfterViewInit, OnDestroy
+	implements OnInit, AfterViewInit, OnDestroy
 {
-  @ViewChild(MtPagedListFullComponent) baseList!: MtPagedListFullComponent;
+	@ViewChild(MtPagedListFullComponent)
+	baseList!: MtPagedListFullComponent;
 
-  constructor() {
-    console.log('[OnInit AppBaseListComponent]');
-  }
+	constructor() {
+		console.log('[OnInit AppBaseListComponent]');
+	}
 
-  ngOnInit(): void {}
+	ngOnInit(): void {}
 
-  ngAfterViewInit(): void {}
+	ngAfterViewInit(): void {}
 
-  ngOnDestroy(): void {}
+	ngOnDestroy(): void {}
 }

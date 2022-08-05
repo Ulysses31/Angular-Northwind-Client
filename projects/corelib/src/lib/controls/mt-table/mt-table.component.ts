@@ -1,3 +1,4 @@
+import { MtBaseEntity } from 'projects/corelib/src/public-api';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { SelectionModel } from '@angular/cdk/collections';
 import {
@@ -75,11 +76,11 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class MtTableComponent implements OnInit, AfterViewInit {
   pageEvent?: PageEvent;
-  @Input() displayedColumns: string[] = [];
+  @Input() displayedColumns: string[] | undefined = [];
   @Input() dataSource: any[] = [];
   @Input() command: any;
   @Input() disabled: boolean = false;
-  @Input() length: number = 0;
+  @Input() length: number | undefined = 0;
   @Input() pageSize: number = 5;
   @Input() pageSizeOptions: number[] = [5, 10, 25, 100];
   @Input() hasPagination: boolean = true;
