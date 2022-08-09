@@ -15,3 +15,25 @@ table {
 th.mat-sort-header-sorted {
   color: black;
 }
+
+.browser-table {
+  margin-top: 20px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.action-toolbar .mat-toolbar {
+  background-color: #fff;
+  height: 50px;
+}
+
+pre {
+  font-size: 0.8em;
+  font-style: italic;
+  height: 200px;
+  overflow: auto;
+  padding: 10px;
+  margin-top: 18px;
+}

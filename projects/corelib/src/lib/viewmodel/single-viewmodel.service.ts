@@ -5,6 +5,7 @@ import {
 	AfterViewInit,
 	Injector
 } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MtBaseEntity } from '../models/base-entity';
@@ -16,219 +17,182 @@ export abstract class MtSingleViewModelService<
 {
 	model?: TModel | undefined;
 	isNew: boolean | undefined;
-	label: string | undefined;
-	// message: Message | undefined;
 	isBusy: boolean = false;
-	// headerActions: NgHeaderAction[] = [];
 	toggleModelPre: boolean = false;
 	backUrl: string | undefined;
-	// dialogMessageContent: DialogMessageEntity = {
-	//   display: false,
-	//   title: 'Message',
-	//   content: '',
-	//   hasBtnUrl: false,
-	// };
 
 	abstract getById(id: string): Observable<TModel>;
+	abstract postDto(item: TModel): Observable<TModel>;
+	abstract putDto(id: string, item: TModel): Observable<TModel>;
+	abstract deleteDto(id: string): Observable<void>;
+	abstract resetDto(item: TModel): Observable<TModel>;
 
-	protected route: ActivatedRoute;
-	protected router: Router;
-	// protected confirmationService: ConfirmationService;
-
-	protected abstract resetCb: (item: TModel) => Observable<TModel>;
-	protected abstract postCb: (item: TModel) => Observable<TModel>;
-	protected abstract putCb: (
-		id: string,
-		item: TModel
-	) => Observable<TModel>;
-	protected abstract deleteCb: (id: string) => Observable<void>;
-
-	constructor(public injector: Injector) {
-		this.route = injector.get<ActivatedRoute>(ActivatedRoute);
-		this.router = injector.get<Router>(Router);
-		// this.confirmationService =
-		//  injector.get<ConfirmationService>(ConfirmationService);
-	}
+	constructor(
+		public injector: Injector,
+		public snackBar: MatSnackBar,
+		public route: ActivatedRoute,
+		public router: Router
+	) {}
 
 	ngOnInit(): void {
 		this.backUrl = decodeURIComponent(
 			this.route.snapshot.queryParams['backUrl']
 		);
-		// this.headerActions.push(
-		//   {
-		//     id: 'back',
-		//     icon: 'pi pi-arrow-circle-left',
-		//     iconPosition: 'left',
-		//     label: 'Back',
-		//     ngClass: 'p-button-raised p-button-sm p-button-warning',
-		//     visible: true,
-		//     command: () => this.router.navigate([this.backUrl]),
-		//   },
-		//   {
-		//     id: 'new',
-		//     icon: 'pi pi-plus',
-		//     iconPosition: 'left',
-		//     label: 'New',
-		//     ngClass: 'p-button-raised p-button-sm p-button-success',
-		//     visible: true,
-		//     command: () => this.performReset(),
-		//   },
-		//   {
-		//     id: 'save',
-		//     icon: 'pi pi-save',
-		//     iconPosition: 'left',
-		//     label: 'Save',
-		//     ngClass: 'p-button-raised p-button-sm p-button-success',
-		//     visible: true,
-		//     command: () => this.performSave(),
-		//   },
-		//   {
-		//     id: 'delete',
-		//     icon: 'pi pi-trash',
-		//     iconPosition: 'left',
-		//     label: 'Delete',
-		//     ngClass: 'p-button-raised p-button-sm p-button-danger',
-		//     visible: true,
-		//     command: () => this.performDelete(),
-		//   },
-		//   {
-		//     id: 'refresh',
-		//     icon: 'pi pi-refresh',
-		//     iconPosition: 'left',
-		//     label: 'Refresh',
-		//     ngClass: 'p-button-raised p-button-sm p-button-info',
-		//     visible: true,
-		//     command: () => this.getModel(),
-		//   },
-		//   {
-		//     id: 'model',
-		//     icon: 'pi pi-id-card',
-		//     iconPosition: 'left',
-		//     label: 'Model',
-		//     ngClass: 'p-button-raised p-button-sm p-button-danger',
-		//     visible: true,
-		//     command: () => (this.toggleModelPre = !this.toggleModelPre),
-		//   }
-		// );
-
-		// get the model
-		// this.getModel();
 	}
 
 	ngAfterViewInit(): void {}
 
 	ngOnDestroy(): void {}
 
-	// private getModel(): void {
-	// 	const idx = this.headerActions.findIndex(
-	// 		(item) => item.id === 'save'
-	// 	);
-	// 	this.isBusy = true;
-	// 	this.route.params
-	// 		.pipe(switchMap(({ id }) => this.getById(id)))
-	// 		.subscribe({
-	// 			next: (data: TModel) => {
-	// 				console.log(data);
-	// 				this.isBusy = false;
-	// 				this.model = data;
-	// 				if (this.headerActions[idx].disabled) {
-	// 					this.headerActions[idx].disabled = false;
-	// 				}
-	// 			},
-	// 			error: (err) => {
-	// 				this.isBusy = false;
-	// 				this.userMessage('error', err.name, err.message);
-	// 				throw err;
-	// 			},
-	// 			complete: () => (this.isBusy = false)
-	// 		});
-	// }
+	public getModel(id: string): void {
+		// 	const idx = this.headerActions.findIndex(
+		// 		(item) => item.id === 'save'
+		// 	);
+		this.isBusy = true;
+		this.getById(id.toString()).subscribe({
+			next: (result: any) => {
+				console.log(result.data);
+				this.isBusy = false;
+				this.model = result.data as TModel;
+				// if (this.headerActions[idx].disabled) {
+				// 	this.headerActions[idx].disabled = false;
+				// }
+			},
+			error: (err) => {
+				this.isBusy = false;
+				this.openSnackBar(`[${err.name}] - ${err.message}`, 'Close');
+				throw err;
+			},
+			complete: () => (this.isBusy = false)
+		});
+	}
 
-	// private performReset(): void {
-	// 	const idx = this.headerActions.findIndex(
-	// 		(item) => item.id === 'save'
-	// 	);
-	// 	of(null)
-	// 		.pipe(switchMap(() => this.resetCb(this.model!)))
-	// 		.subscribe({
-	// 			next: (data: TModel) => {
-	// 				this.model = data;
-	// 				if (!this.headerActions[idx].disabled) {
-	// 					this.headerActions[idx].disabled = true;
-	// 				}
-	// 			}
-	// 		});
-	// }
+	public performReset(): void {
+		// const idx = this.headerActions.findIndex(
+		// 	(item) => item.id === 'save'
+		// );
+		this.resetDto(this.model as TModel).subscribe({
+			next: (result: any) => {
+				console.log(result);
+				this.isBusy = false;
+				this.model = result as TModel;
+				// if (this.headerActions[idx].disabled) {
+				// 	this.headerActions[idx].disabled = false;
+				// }
+			},
+			error: (err) => {
+				this.isBusy = false;
+				this.openSnackBar(`[${err.name}] - ${err.message}`, 'Close');
+				throw err;
+			},
+			complete: () => (this.isBusy = false)
+		});
+	}
 
-	// private performSave(): void {
-	// 	this.isBusy = true;
-	// 	if (this.model?.id === '0') {
-	// 		this.postCb(this.model).subscribe({
-	// 			next: () => this.handleSuccessInsert(),
-	// 			error: (err) => console.log(err),
-	// 			complete: () => (this.isBusy = false)
-	// 		});
-	// 	} else {
-	// 		this.putCb(this.model?.id!, this.model!).subscribe({
-	// 			next: () => this.handleSuccessUpdate(),
-	// 			error: (err) => console.log(err),
-	// 			complete: () => (this.isBusy = false)
-	// 		});
-	// 	}
-	// }
+	public performSave(id: string): void {
+		this.isBusy = true;
+		if (id === '0') {
+			this.postDto(this.model!).subscribe({
+				next: (data) => {
+					// console.log(data);
+					this.openSnackBar('Successfully created!', 'Close');
+					this.performReset();
+				},
+				error: (err) => {
+					this.isBusy = false;
+					this.openSnackBar(
+						`[${err.name}] - ${err.message}`,
+						'Close'
+					);
+					throw err;
+				},
+				complete: () => (this.isBusy = false)
+			});
+		} else {
+			this.putDto(id, this.model!).subscribe({
+				next: (data) => {
+					// console.log(data);
+					this.openSnackBar('Successfully modified!', 'Close');
+				},
+				error: (err) => {
+					this.isBusy = false;
+					this.openSnackBar(
+						`[${err.name}] - ${err.message}`,
+						'Close'
+					);
+					throw err;
+				},
+				complete: () => (this.isBusy = false)
+			});
+		}
+	}
 
-	// private performDelete(): void {
-	// 	this.confirmationService.confirm({
-	// 		message: 'Are you sure that you want to delete it?',
-	// 		accept: () => {
-	// 			if (this.model?.id) {
-	// 				this.isBusy = true;
-	// 				this.deleteCb(this.model.id).subscribe({
-	// 					next: () => this.handleSuccessDelete(),
-	// 					error: (err) => console.log(err),
-	// 					complete: () => (this.isBusy = false)
-	// 				});
-	// 			}
-	// 		}
-	// 	});
-	// }
+	public performDelete(id: string): void {
+		// this.confirmationService.confirm({
+		//	message: 'Are you sure that you want to delete it?',
+		//	accept: () => {
+		if (id) {
+			this.isBusy = true;
+			this.deleteDto(id).subscribe({
+				next: (data) => {
+					// console.log(data);
+					this.openSnackBar('Successfully deleted!', 'Close');
+					this.performReset();
+				},
+				error: (err) => {
+					this.isBusy = false;
+					this.openSnackBar(
+						`[${err.name}] - ${err.message}`,
+						'Close'
+					);
+					throw err;
+				},
+				complete: () => (this.isBusy = false)
+			});
+		}
+		//	}
+		// });
+	}
 
-	// private handleSuccessInsert(): void {
-	// 	this.dialogMessageContent = {
-	// 		display: true,
-	// 		title: 'Success',
-	// 		content: 'Successfully inserted.',
-	// 		hasBtnUrl: true
-	// 	};
-	// }
+	public openSnackBar(message: string, action: string) {
+		this.snackBar.open(message, action, {
+			duration: 5000
+		});
+	}
 
-	// private handleSuccessUpdate(): void {
-	// 	this.dialogMessageContent = {
-	// 		display: true,
-	// 		title: 'Success',
-	// 		content: 'Successfully updated.',
-	// 		hasBtnUrl: true
-	// 	};
-	// }
+	public getTypes(data: any) {
+		let tmpObj = {
+			type: '',
+			title: ''
+		};
+		for (const key in data[0]) {
+			if (Object.prototype.hasOwnProperty.call(data[0], key)) {
+				const element = data[0][key];
+				tmpObj = {
+					type: typeof element,
+					title: key
+				};
+				console.log(Object.prototype.toString.call(element));
+				if (
+					Object.prototype.toString.call(element) === '[object Date]'
+				) {
+					console.log(key + ' is date');
+				}
+				console.log(tmpObj);
+			}
+		}
+	}
 
-	// private handleSuccessDelete(): void {
-	// 	this.dialogMessageContent = {
-	// 		display: true,
-	// 		title: 'Success',
-	// 		content: 'Successfully deleted.',
-	// 		hasBtnUrl: true
-	// 	};
-	// }
-
-	// private userMessage(
-	// 	severity: string,
-	// 	summary: string,
-	// 	detail: string
-	// ): void {
-	// 	this.message = {
-	// 		severity,
-	// 		summary,
-	// 		detail
-	// 	};
-	// }
+	public extractFieldNameId(data: any): string {
+		const vCnt = 0;
+		for (const key in data[0]) {
+			if (vCnt === 0) {
+				if (Object.prototype.hasOwnProperty.call(data[0], key)) {
+					// console.log(key);
+					return key as string;
+				}
+			}
+		}
+		return '';
+	}
 }

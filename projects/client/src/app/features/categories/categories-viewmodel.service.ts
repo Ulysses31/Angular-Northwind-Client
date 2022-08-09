@@ -1,16 +1,20 @@
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { MtBaseSearchModel } from 'projects/corelib/src/lib/models/base-search-model';
 import { Observable } from 'rxjs/internal/Observable';
 import { AppBaseListViewModelService } from '../../core/app-base-list-viewmodel.service';
-import { CategoriesDto } from '../../models/categoriesDto';
+import { CategoriesListDto } from '../../models/categories-list-Dto';
 import { CategoriesService } from './categories.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class CategoriesViewModelService
-  extends AppBaseListViewModelService<CategoriesDto> {
+  extends AppBaseListViewModelService<CategoriesListDto> {
 
-  constructor(private categoriesService: CategoriesService) {
-    super();
+  constructor(
+    public override snackBar: MatSnackBar,
+    private categoriesService: CategoriesService
+    ) {
+    super(snackBar);
     console.log('[OnInit CategoriesViewModelService]');
   }
 
@@ -26,14 +30,14 @@ export class CategoriesViewModelService
     super.ngOnDestroy();
   }
 
-  search(searchModel: MtBaseSearchModel): Observable<CategoriesDto[]> {
+  search(searchModel: MtBaseSearchModel): Observable<CategoriesListDto[]> {
     console.log(
       `Categories viewmodel search called...fetching ${this.categoriesService.getApiServiceUrl()}`
     );
     return this.categoriesService.getAll();
   }
 
-  getById(id: string): Observable<CategoriesDto> {
+  getById(id: string): Observable<CategoriesListDto> {
     console.log(
       `Categories viewmodel getById called...fetching ${this.categoriesService.getApiServiceUrl()}`
     );

@@ -21,7 +21,7 @@ import { MatIconModule } from '@angular/material/icon';
     HttpClientModule,
     BrowserAnimationsModule,
     CoreRoutingModule,
-    SharedModule,
+   // SharedModule,
     MenuBarModule,
     MatSidenavModule,
     MatIconModule

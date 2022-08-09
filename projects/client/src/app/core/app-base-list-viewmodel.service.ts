@@ -1,14 +1,15 @@
 import { Directive } from '@angular/core';
 import { MtPagedListViewModelService } from 'projects/corelib/src/lib/viewmodel/paged-list-viewmodel.service';
 import { MtBaseEntity } from 'projects/corelib/src/public-api';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Directive()
 export abstract class AppBaseListViewModelService<
   TModel extends MtBaseEntity
 > extends MtPagedListViewModelService<TModel> {
 
-  constructor() {
-    super();
+  constructor(public override snackBar: MatSnackBar) {
+    super(snackBar);
     console.log('[OnInit AppBaseListViewModelService]');
   }
 

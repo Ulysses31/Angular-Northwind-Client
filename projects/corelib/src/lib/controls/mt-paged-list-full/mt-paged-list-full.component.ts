@@ -11,21 +11,59 @@ import {
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { TooltipPosition } from '@angular/material/tooltip';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ImtActionToolbarItems } from '../../interfaces/mtActionToolbarItems';
 import { MtBaseEntity } from '../../models/base-entity';
+import { MaterialColor, ProgrBarMode } from '../../models/enums';
 import { MtPagedListViewModelService } from '../../viewmodel/paged-list-viewmodel.service';
 
 @Component({
 	selector: 'mt-paged-list-full',
 	template: `
+		<!-- Progress -->
+		<mt-progress [mode]="mode" *ngIf="this.VM?.isBusy"></mt-progress>
+		<br />
+		<!-- Progress -->
+
+		<!-- Toolbar -->
+		<div class="action-toolbar mat-elevation-z5">
+			<mat-toolbar [color]="color">
+				<span style="color: #bebebe">{{ gridTitle }}</span>
+				<span class="example-spacer"></span>
+				<button
+					*ngFor="let btn of actionBarItems"
+					mat-icon-button
+					class="example-icon favorite-icon"
+					aria-label="btn.id"
+					[matTooltip]="btn.toolTipMessage"
+					[matTooltipPosition]="tipPosition"
+					[matTooltipShowDelay]="1000"
+					(click)="btn?.command()">
+					<mat-icon>{{ btn.icon }}</mat-icon>
+				</button>
+			</mat-toolbar>
+		</div>
+		<!-- Toolbar -->
+
+		<!-- View Model -->
+		<pre
+			*ngIf="toggleViewModel"
+			class="action-toolbar mat-elevation-z5"
+			>{{ VM?.model | json }}
+    </pre
+		>
+		<!-- View Model -->
+
 		<!-- Table -->
 		<div *ngIf="VM?.model">
-			<div class="mat-elevation-z8">
+			<div class="mat-elevation-z5">
 				<table
 					mat-table
 					[dataSource]="matTableDs"
 					matSort
 					(matSortChange)="announceSortChange($event)"
-					class="mat-elevation-z8">
+					class="browser-table mat-elevation-z8">
 					<ng-container
 						*ngFor="let item of this.VM?.columnDefs; let i = index"
 						matColumnDef="{{ item }}">
@@ -54,7 +92,7 @@ import { MtPagedListViewModelService } from '../../viewmodel/paged-list-viewmode
 							>
 							<span
 								*ngIf="item === 'CreatedAt' || item === 'UpdatedAt'"
-								>{{ element[item] | date: 'dd/MM/yyyy' }}</span
+								>{{ element[item] | date: 'dd/MM/yyyy hh:mm.ss' }}</span
 							>
 						</td>
 					</ng-container>
@@ -79,27 +117,58 @@ import { MtPagedListViewModelService } from '../../viewmodel/paged-list-viewmode
 			</div>
 		</div>
 		<!-- Table -->
-		<!-- <mt-table
-      [dataSource]="$any(VM?.model)"
-      [displayedColumns]="VM?.columnDefs"
-      [length]="VM?.modelCount"
-    >
-    </mt-table> -->
-		<pre>{{ VM?.model | json }}</pre>
 	`,
 	styleUrls: ['./mt-paged-list-full.component.css']
 })
 export class MtPagedListFullComponent
 	implements OnInit, AfterViewInit, OnDestroy
 {
+	readonly tipPosition: TooltipPosition = 'above';
+	toggleViewModel: boolean = false;
 	pageEvent?: PageEvent;
 	@Input() VM?: MtPagedListViewModelService<MtBaseEntity>;
-	// @Input() command: any;
 	@Input() disabled: boolean = false;
+	@Input() gridTitle: string = '';
 	@Input() pageSize: number = 5;
 	@Input() pageSizeOptions: number[] = [5, 10, 25, 100];
 	@Input() hasPagination: boolean = true;
 	@Input() isSelectable: boolean = true;
+	@Input() color: MaterialColor = MaterialColor.Basic;
+	@Input() mode: ProgrBarMode = ProgrBarMode.Query;
+	@Input() actionBarItems: ImtActionToolbarItems[] = [
+		{
+			id: 'insert',
+			icon: 'add',
+			toolTipMessage: 'Insert new item',
+			command: () => this.insertNewItem()
+		},
+		{
+			id: 'edit',
+			icon: 'edit',
+			toolTipMessage: 'Edit selected item',
+			command: () => this.editSelectedItem()
+		},
+		{
+			id: 'refresh',
+			icon: 'cached',
+			toolTipMessage: 'Refresh data',
+			command: () => {
+				this.VM !== undefined ? (this.VM.isBusy = true) : undefined;
+				this.VM?.search({}).subscribe((response: any) => {
+					this.matTableDs.data = response.data;
+					this.VM !== undefined
+						? (this.VM.isBusy = false)
+						: undefined;
+				});
+			}
+		},
+		{
+			id: 'model',
+			icon: 'build',
+			toolTipMessage: 'View model',
+			command: () => this.viewModel()
+		}
+	];
 
 	@ViewChild(MatPaginator) paginator: MatPaginator = {
 		pageSize: this.pageSize ? this.pageSize : 0,
@@ -116,7 +185,10 @@ export class MtPagedListFullComponent
 	allowMultiSelect = true;
 	oldChecked: boolean = false;
 
-	constructor(private _liveAnnouncer: LiveAnnouncer) {
+	constructor(
+		private _liveAnnouncer: LiveAnnouncer,
+    private router: Router
+	) {
 		console.log('[OnInit MtPagedListFullComponent]');
 	}
 
@@ -147,9 +219,13 @@ export class MtPagedListFullComponent
 
 	/** Selects all rows if they are not all selected; otherwise clear selection. */
 	public getSelected(sl: any, element: any) {
+		this.selection.clear();
 		this.matTableDs.data.forEach((row: any) => {
 			if (row !== element) {
 				row.checked = false;
+			}
+			if (element.checked) {
+				this.selection.select(element);
 			}
 		});
 	}
@@ -168,5 +244,35 @@ export class MtPagedListFullComponent
 			console.log('Sorting cleared');
 			this._liveAnnouncer.announce('Sorting cleared');
 		}
+	}
+
+	private editSelectedItem(): void {
+		if (this.selection.selected.length > 0) {
+			this.selection.selected.map((item: any) => {
+				if (item) {
+					console.log(`Edit item: [${JSON.stringify(item)}]`);
+					// console.log(this.selection.selected);
+					let idName: string = this.VM?.extractFieldNameId([
+						item
+					]) as string;
+					let id: string = item[idName];
+					this.router.navigate(['/categories', id], {
+            queryParams: { backUrl: this.router.url },
+          });
+				}
+			});
+		} else {
+			this.VM?.openSnackBar(this.VM?.snackEditMsg!, 'Close');
+		}
+	}
+
+  private insertNewItem(): void {
+    this.router.navigate(['/categories', 0], {
+      queryParams: { backUrl: this.router.url },
+    });
+  }
+
+	public viewModel(): void {
+		this.toggleViewModel = !this.toggleViewModel;
 	}
 }

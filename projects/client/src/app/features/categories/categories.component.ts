@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AppBaseListComponent } from '../../core/app-base-list.component';
 import { CategoriesViewModelService } from './categories-viewmodel.service';
 
@@ -8,6 +8,8 @@ import { CategoriesViewModelService } from './categories-viewmodel.service';
 	styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent extends AppBaseListComponent {
+  gridTitle: string = 'Categories';
+
 	constructor(public VM: CategoriesViewModelService) {
 		super();
     console.log('[OnInit CategoriesComponent]');

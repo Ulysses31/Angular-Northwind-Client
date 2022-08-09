@@ -4,7 +4,8 @@ import {
 	OnDestroy,
 	OnInit
 } from '@angular/core';
-import { from, map, Observable, tap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { from, Observable } from 'rxjs';
 import { MtBaseEntity } from '../models/base-entity';
 import { MtBaseSearchModel } from '../models/base-search-model';
 
@@ -14,22 +15,19 @@ export abstract class MtPagedListViewModelService<
 > implements OnInit, AfterViewInit, OnDestroy
 {
 	model: TModel[] = [];
-  modelCount: number | undefined  = 0;
-  columnDefs?: any[] = [];
-	//selectedModel?: TModel | undefined;
-	//modelStruct?: string[] = [];
-	//label: string | undefined;
-	//rowData: Observable<any> | undefined;
-	isBusy: boolean = false;
-	//isShowFilters: boolean = true;
-	//toggleModelPre: boolean = false;
+	modelCount: number | undefined = 0;
+	columnDefs?: any[] = [];
+	public isBusy: boolean = false;
+
+	readonly snackEditMsg?: string = 'Select an item to edit.';
+	readonly snackDeleteMsg?: string = 'Select an item to delete.';
 
 	abstract search(
 		searchModel: MtBaseSearchModel
 	): Observable<TModel[]>;
 	abstract getById(id: string): Observable<TModel>;
 
-	constructor() {
+	constructor(public snackBar: MatSnackBar) {
 		console.log('[OnInit MtPagedListViewModelService]');
 	}
 
@@ -52,7 +50,7 @@ export abstract class MtPagedListViewModelService<
 			},
 			error: (err) => {
 				this.isBusy = false;
-				// this.userMessage('error', err.name, err.message);
+				this.openSnackBar(`[${err.name}] - ${err.message}`, 'Close');
 				throw err;
 			},
 			complete: () => (this.isBusy = false)
@@ -63,28 +61,41 @@ export abstract class MtPagedListViewModelService<
 		from([dto])
 			// .pipe(
 			// 	map((data: any[]) => {
-      //     dto = data.map((item: any) => {
-      //       item.CreatedAt = new Date().toLocaleDateString('el-GR')
-      //       return item;
-      //     });
-      //     return dto;
-      //   })
+			//     dto = data.map((item: any) => {
+			//       item.CreatedAt = new Date().toLocaleDateString('el-GR')
+			//       return item;
+			//     });
+			//     return dto;
+			//   })
 			// )
 			.subscribe({
 				next: (data: TModel[]) => {
-          // Generate table headers
-          this.columnDefs = Object.getOwnPropertyNames(data[0]) as [];
-          this.columnDefs.unshift('#');
+					// Generate table headers
+					this.columnDefs = Object.getOwnPropertyNames(data[0]) as [];
+					this.columnDefs.unshift('#');
 
-          this.model = data;
-          this.modelCount = this.model.length;
+					this.model = data;
+					this.modelCount = this.model.length;
 
-          this.getTypes(data);
+					this.getTypes(data);
 
-          // console.log(this.columnDefs);
-          // console.log(data);
+					// console.log(this.columnDefs);
+					// console.log(data);
+				},
+				error: (err) => {
+					this.openSnackBar(
+						`[${err.name}] - ${err.message}`,
+						'Close'
+					);
+					throw err;
 				}
 			});
+	}
+
+	public openSnackBar(message: string, action: string) {
+		this.snackBar.open(message, action, {
+			duration: 5000
+		});
 	}
 
 	public getTypes(data: any) {
@@ -102,5 +113,18 @@ export abstract class MtPagedListViewModelService<
 				// console.log(tmpObj);
 			}
 		}
+	}
+
+	public extractFieldNameId(data: any): string {
+		const vCnt = 0;
+		for (const key in data[0]) {
+			if (vCnt === 0) {
+				if (Object.prototype.hasOwnProperty.call(data[0], key)) {
+					// console.log(key);
+					return key as string;
+				}
+			}
+		}
+		return '';
 	}
 }

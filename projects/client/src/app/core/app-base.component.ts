@@ -5,7 +5,7 @@ import {
 	OnInit,
 	ViewChild
 } from '@angular/core';
-import { MtSingleFullComponent } from 'corelib';
+import { MtSingleFullComponent } from 'projects/corelib/src/public-api';
 
 @Directive()
 export abstract class AppBaseComponent

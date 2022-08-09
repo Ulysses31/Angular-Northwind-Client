@@ -53,6 +53,7 @@
             "main": "projects/client/src/main.ts",
             "polyfills": "projects/client/src/polyfills.ts",
             "tsConfig": "projects/client/tsconfig.app.json",
+            "preserveSymlinks": false,
             "assets": [
               "projects/client/src/favicon.ico",
               "projects/client/src/assets"

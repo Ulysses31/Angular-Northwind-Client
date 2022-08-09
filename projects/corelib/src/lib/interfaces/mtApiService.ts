@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
  * @author Iordanidis Chris
  * @description ApiService<T> interface
  */
-export interface ImtApiService<TModel> {
+export interface ImtApiService<TModelList, TModel> {
 	/**
 	 * @description Returns the api url
 	 */
@@ -20,14 +20,14 @@ export interface ImtApiService<TModel> {
 	 * @description Get list of T
 	 * @returns Observable<T[]>
 	 */
-	getAll(): Observable<TModel[]>;
+	getAll(): Observable<TModelList[]>;
 
 	/**
 	 * @description Get T by id
 	 * @param id number
 	 * @returns Observable<T>
 	 */
-	getById(id: string): Observable<TModel>;
+	getById(id: string): Observable<TModelList>;
 
 	/**
 	 * @description Insert new T
