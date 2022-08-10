@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { MtBaseSearchModel } from 'projects/corelib/src/lib/models/base-search-model';
 import { Observable } from 'rxjs/internal/Observable';
 import { AppBaseListViewModelService } from '../../core/app-base-list-viewmodel.service';
-import { CategoriesListDto } from '../../models/categories-list-Dto';
 import { CategoriesService } from './categories.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CategoriesListDto } from '../../models/categories-list-Dto';
 
 @Injectable()
 export class CategoriesViewModelService

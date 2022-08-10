@@ -206,6 +206,7 @@ export class MtPagedListFullComponent
 
 	ngOnInit(): void {
 		this.VM?.ngOnInit();
+    this.matTableDs = new MatTableDataSource([]);
 	}
 
 	ngAfterViewInit(): void {
