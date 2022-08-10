@@ -40,7 +40,9 @@ import { MtPagedListViewModelService } from '../../viewmodel/paged-list-viewmode
 					[matTooltipPosition]="tipPosition"
 					[matTooltipShowDelay]="1000"
 					(click)="btn?.command()">
-					<mat-icon>{{ btn.icon }}</mat-icon>
+					<mat-icon [ngStyle]="{ color: btn.color }">{{
+						btn.icon
+					}}</mat-icon>
 				</button>
 			</mat-toolbar>
 		</div>
@@ -92,7 +94,9 @@ import { MtPagedListViewModelService } from '../../viewmodel/paged-list-viewmode
 							>
 							<span
 								*ngIf="item === 'CreatedAt' || item === 'UpdatedAt'"
-								>{{ element[item] | date: 'dd/MM/yyyy hh:mm.ss' }}</span
+								>{{
+									element[item] | date: 'dd/MM/yyyy hh:mm.ss'
+								}}</span
 							>
 						</td>
 					</ng-container>
@@ -140,18 +144,24 @@ export class MtPagedListFullComponent
 			id: 'insert',
 			icon: 'add',
 			toolTipMessage: 'Insert new item',
+			color: 'yellowgreen',
+      disabled: false,
 			command: () => this.insertNewItem()
 		},
 		{
 			id: 'edit',
 			icon: 'edit',
 			toolTipMessage: 'Edit selected item',
+			color: 'yellowgreen',
+      disabled: false,
 			command: () => this.editSelectedItem()
 		},
 		{
 			id: 'refresh',
 			icon: 'cached',
 			toolTipMessage: 'Refresh data',
+			color: 'black',
+      disabled: false,
 			command: () => {
 				this.VM !== undefined ? (this.VM.isBusy = true) : undefined;
 				this.VM?.search({}).subscribe((response: any) => {
@@ -166,6 +176,8 @@ export class MtPagedListFullComponent
 			id: 'model',
 			icon: 'build',
 			toolTipMessage: 'View model',
+			color: 'black',
+      disabled: false,
 			command: () => this.viewModel()
 		}
 	];
@@ -187,7 +199,7 @@ export class MtPagedListFullComponent
 
 	constructor(
 		private _liveAnnouncer: LiveAnnouncer,
-    private router: Router
+		private router: Router
 	) {
 		console.log('[OnInit MtPagedListFullComponent]');
 	}
@@ -257,8 +269,8 @@ export class MtPagedListFullComponent
 					]) as string;
 					let id: string = item[idName];
 					this.router.navigate(['/categories', id], {
-            queryParams: { backUrl: this.router.url },
-          });
+						queryParams: { backUrl: this.router.url }
+					});
 				}
 			});
 		} else {
@@ -266,11 +278,11 @@ export class MtPagedListFullComponent
 		}
 	}
 
-  private insertNewItem(): void {
-    this.router.navigate(['/categories', 0], {
-      queryParams: { backUrl: this.router.url },
-    });
-  }
+	private insertNewItem(): void {
+		this.router.navigate(['/categories', 0], {
+			queryParams: { backUrl: this.router.url }
+		});
+	}
 
 	public viewModel(): void {
 		this.toggleViewModel = !this.toggleViewModel;
