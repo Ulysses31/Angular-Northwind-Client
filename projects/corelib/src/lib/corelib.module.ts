@@ -11,6 +11,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogModule } from '@angular/cdk/dialog';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatRadioModule } from '@angular/material/radio';
@@ -65,6 +67,7 @@ import { MtLayoutComponent } from './controls/mt-layout/mt-layout.component';
 import { MtToolbarComponent } from './controls/mt-toolbar/mt-toolbar.component';
 import { MtPagedListFullComponent } from './controls/mt-paged-list-full/mt-paged-list-full.component';
 import { MtSingleFullComponent } from './controls/mt-single-full/mt-single-full.component';
+import { MtDialogComponent } from './controls/mt-dialog/mt-dialog.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +108,8 @@ import { MtSingleFullComponent } from './controls/mt-single-full/mt-single-full.
     MtLayoutComponent,
     MtToolbarComponent,
     MtPagedListFullComponent,
-    MtSingleFullComponent
+    MtSingleFullComponent,
+    MtDialogComponent
   ],
   imports: [
     CommonModule,
@@ -119,6 +123,8 @@ import { MtSingleFullComponent } from './controls/mt-single-full/mt-single-full.
     MatCheckboxModule,
     MatChipsModule,
     MatExpansionModule,
+    MatDialogModule,
+    DialogModule,
     MatListModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,

@@ -1,3 +1,4 @@
+import { NgForm } from '@angular/forms';
 import {
 	AfterViewInit,
 	Directive,
@@ -13,6 +14,8 @@ export abstract class AppBaseComponent
 {
 	@ViewChild(MtSingleFullComponent, { static: true })
 	singleEntity!: MtSingleFullComponent;
+
+	abstract formStatus(frm: NgForm): void;
 
 	constructor() {
 		console.log('[OnInit AppBaseComponent]');

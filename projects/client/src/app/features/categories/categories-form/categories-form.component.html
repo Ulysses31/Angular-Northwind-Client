@@ -1,4 +1,7 @@
-<mt-single-full [formTitle]="formTitle" [VM]="VM"></mt-single-full>
+<mt-single-full
+	[formTitle]="formTitle"
+	[VM]="VM"
+	[formStatus]="frmStatus"></mt-single-full>
 <!-- Form -->
 <form #frm="ngForm" (change)="formStatus(frm)">
 	<div class="form-container mat-elevation-z5">
@@ -7,9 +10,8 @@
 			[label]="'Category Name'"
 			[placeHolder]="'Enter the category name'"
 			[(ngModel)]="VM.model && VM.model.CategoryName"
-      name="categoryName"
-      #categoryNameField="ngModel"
-    >
+			name="categoryName"
+			[required]="true">
 		</mt-input-text>
 		<mt-input-text
 			class="mat-form-field"
@@ -17,9 +19,8 @@
 			[label]="'Description'"
 			[placeHolder]="'Enter the description'"
 			[(ngModel)]="VM.model && VM.model.Description"
-      name="description"
-      #descriptionField="ngModel"
-    >
+			name="description"
+			[required]="true">
 		</mt-input-text>
 	</div>
 </form>

@@ -1,10 +1,14 @@
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
 	AfterViewInit,
 	Component,
+	EventEmitter,
 	Input,
 	OnDestroy,
-	OnInit
+	OnInit,
+	TemplateRef,
+	ViewChild
 } from '@angular/core';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { ImtActionToolbarItems } from '../../interfaces/mtActionToolbarItems';
@@ -33,8 +37,12 @@ import { MtSingleViewModelService } from '../../viewmodel/single-viewmodel.servi
 					[matTooltip]="btn.toolTipMessage"
 					[matTooltipPosition]="tipPosition"
 					[matTooltipShowDelay]="1000"
-					(click)="btn?.command()">
-					<mat-icon>{{ btn.icon }}</mat-icon>
+					(click)="btn?.command()"
+          [disabled]="btn.disabled"
+        >
+					<mat-icon [ngStyle]="{ 'color': btn.color }">{{
+						btn.icon
+					}}</mat-icon>
 				</button>
 			</mat-toolbar>
 		</div>
@@ -60,11 +68,14 @@ export class MtSingleFullComponent
 	@Input() color: MaterialColor = MaterialColor.Basic;
 	@Input() mode: ProgrBarMode = ProgrBarMode.Query;
 	@Input() formTitle: string = '';
+  @Input() formStatus?: EventEmitter<string | null>;
 	@Input() actionBarItems: ImtActionToolbarItems[] = [
 		{
 			id: 'back',
 			icon: 'arrow_back',
 			toolTipMessage: 'Back to browser',
+      color: 'black',
+      disabled: false,
 			command: () => {
 				this.router.navigate([this.VM?.backUrl]);
 			}
@@ -73,30 +84,38 @@ export class MtSingleFullComponent
 			id: 'save',
 			icon: 'save',
 			toolTipMessage: 'Save',
+      color: 'yellowgreen',
+      disabled: true,
 			command: () => {
-        var id: string = this.getIdfromRoute();
-        this.VM?.performSave(id);
-      }
+				var id: string = this.getIdfromRoute();
+				this.VM?.performSave(id);
+			}
 		},
-    {
+		{
 			id: 'delete',
 			icon: 'delete',
 			toolTipMessage: 'Delete',
+      color: 'orangered',
+      disabled: false,
 			command: () => {
-        var id: string = this.getIdfromRoute();
-        this.VM?.performDelete(id);
-      }
+				var id: string = this.getIdfromRoute();
+				this.VM?.performDelete(id);
+			}
 		},
 		{
 			id: 'refresh',
 			icon: 'cached',
 			toolTipMessage: 'Refresh data',
+      color: 'black',
+      disabled: false,
 			command: () => this.callGetModel()
 		},
 		{
 			id: 'model',
 			icon: 'build',
 			toolTipMessage: 'View model',
+			color: 'black',
+      disabled: false,
 			command: () => this.viewModel()
 		}
 	];
@@ -109,6 +128,15 @@ export class MtSingleFullComponent
 	ngOnInit(): void {
 		this.VM?.ngOnInit();
 		this.callGetModel();
+
+    this.formStatus?.subscribe((data) => {
+      // console.log(data);
+      if(data === 'INVALID') {
+        this.actionBarItems[1].disabled = true;
+      } else {
+        this.actionBarItems[1].disabled = false;
+      }
+    });
 	}
 
 	ngAfterViewInit(): void {
@@ -125,19 +153,19 @@ export class MtSingleFullComponent
 
 	private callGetModel(): void {
 		this.route.params.subscribe((data: any) => {
-      if(parseInt(data.id) > 0) {
-			  this.VM?.getModel(data.id);
-      } else {
-        this.VM?.performReset();
-      }
+			if (parseInt(data.id) > 0) {
+				this.VM?.getModel(data.id);
+			} else {
+				this.VM?.performReset();
+			}
 		});
 	}
 
-  private getIdfromRoute(): string {
-    var id: string = '';
-    this.route.params.subscribe((data: any) => {
-		  id = data.id as string;
+	private getIdfromRoute(): string {
+		var id: string = '';
+		this.route.params.subscribe((data: any) => {
+			id = data.id as string;
 		});
-    return id;
-  }
+		return id;
+	}
 }

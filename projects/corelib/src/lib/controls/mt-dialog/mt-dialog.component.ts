@@ -1,56 +1,40 @@
-// import { Component, OnInit, Input, Inject } from '@angular/core';
-// import { MtDialogActionsContent } from '../../interfaces/mtDialogActionsContent';
-// import { MaterialBtnAlign } from '../../models/enums';
+import { Component, OnInit, Inject, Optional } from '@angular/core';
+import {
+	MatDialogRef,
+	MAT_DIALOG_DATA
+} from '@angular/material/dialog';
 
-// @Component({
-//   selector: 'mt-dialog',
-//   template: `
-//     <h2 mat-dialog-title>{{title}}</h2>
-//     <mat-dialog-content class="mat-typography" *ngIf="content">
-//       {{content}}
-//     </mat-dialog-content>
-//     <mat-dialog-actions align="end">
-//       <button mat-button mat-dialog-close>OK</button>
-//       <button mat-button mat-dialog-close cdkFocusInitial>
-//       CANCEL
-//       </button>
-//     </mat-dialog-actions>
-//   `,
-//   styleUrls: ['./mt-dialog.component.css']
-// })
-// export class MtDialogComponent implements OnInit {
-//   @Input() title: string = 'Install Angular';
-//   @Input() content: string = 'Material dialog content';
-//   @Input() dialogAction: MtDialogActionsContent = {
-//     aling: MaterialBtnAlign.Start,
-//     buttons: [
-//       {
-//         text: 'Cancel',
-//       },
-//       {
-//         text: 'Install',
-//       },
-//     ],
-//   };
+@Component({
+  selector: 'mat-dialog',
+	template: `
+		<h2 mat-dialog-title>{{title}}</h2>
+		<mat-dialog-content class="mat-typography">
+			 {{content}}
+		</mat-dialog-content>
+		<mat-dialog-actions align="end">
+			<button mat-button [mat-dialog-close]="data.choice[0]">Yes</button>
+			<button mat-button [mat-dialog-close]="data.choice[1]" cdkFocusInitial>
+				No
+			</button>
+		</mat-dialog-actions>
+	`,
+	styleUrls: ['./mt-dialog.component.css']
+})
+export class MtDialogComponent {
+	title: string = 'Install Angular';
+	content: string = 'Material dialog content';
 
-//   constructor(
-//     //public dialog: MatDialog
-//     //public dialogRef: MatDialogRef<MtDialogComponent>,
-//     // @Inject(MAT_DIALOG_DATA) public data: DialogData,
-//   ) {}
+	constructor(
+		private dialogRef: MatDialogRef<MtDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+	) {
+    this.title = data.title;
+    this.content = data.content;
+  }
 
+	ngOnInit(): void {}
 
-//   ngOnInit(): void {
-//   }
-
-//   // openDialog(): void {
-//   //   const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-//   //     width: '250px',
-//   //    // data: {name: this.name, animal: this.animal},
-//   //   });
-//   // }
-
-//   onNoClick(): void {
-//     //this.dialogRef.close();
-//   }
-// }
+	close() {
+		this.dialogRef.close();
+	}
+}

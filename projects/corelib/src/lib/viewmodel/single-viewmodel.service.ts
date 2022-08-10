@@ -9,6 +9,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { MtBaseEntity } from '../models/base-entity';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MtDialogComponent } from '../controls/mt-dialog/mt-dialog.component';
 
 @Directive()
 export abstract class MtSingleViewModelService<
@@ -29,6 +31,7 @@ export abstract class MtSingleViewModelService<
 
 	constructor(
 		public injector: Injector,
+		public dialog: MatDialog,
 		public snackBar: MatSnackBar,
 		public route: ActivatedRoute,
 		public router: Router
@@ -51,7 +54,7 @@ export abstract class MtSingleViewModelService<
 		this.isBusy = true;
 		this.getById(id.toString()).subscribe({
 			next: (result: any) => {
-				console.log(result.data);
+				// console.log(result.data);
 				this.isBusy = false;
 				this.model = result.data as TModel;
 				// if (this.headerActions[idx].disabled) {
@@ -132,22 +135,29 @@ export abstract class MtSingleViewModelService<
 		//	message: 'Are you sure that you want to delete it?',
 		//	accept: () => {
 		if (id) {
-			this.isBusy = true;
-			this.deleteDto(id).subscribe({
-				next: (data) => {
-					// console.log(data);
-					this.openSnackBar('Successfully deleted!', 'Close');
-					this.performReset();
-				},
-				error: (err) => {
-					this.isBusy = false;
-					this.openSnackBar(
-						`[${err.name}] - ${err.message}`,
-						'Close'
-					);
-					throw err;
-				},
-				complete: () => (this.isBusy = false)
+			this.confirmDialog(
+				'Confirm',
+				'Are you sure you want to delete it?'
+			).subscribe((result: boolean) => {
+				if (result) {
+					this.isBusy = true;
+					this.deleteDto(id).subscribe({
+						next: (data) => {
+							// console.log(data);
+							this.openSnackBar('Successfully deleted!', 'Close');
+							this.performReset();
+						},
+						error: (err) => {
+							this.isBusy = false;
+							this.openSnackBar(
+								`[${err.name}] - ${err.message}`,
+								'Close'
+							);
+							throw err;
+						},
+						complete: () => (this.isBusy = false)
+					});
+				}
 			});
 		}
 		//	}
@@ -194,5 +204,26 @@ export abstract class MtSingleViewModelService<
 			}
 		}
 		return '';
+	}
+
+	public confirmDialog(
+		title: string,
+		content: string
+	): Observable<boolean> {
+		const dialogConfig = new MatDialogConfig();
+		dialogConfig.disableClose = true;
+		dialogConfig.autoFocus = true;
+		dialogConfig.data = {
+			title: title,
+			content: content,
+			choice: [true, false]
+		};
+
+		const dialogRef = this.dialog.open(
+			MtDialogComponent,
+			dialogConfig
+		);
+
+		return dialogRef.afterClosed();
 	}
 }

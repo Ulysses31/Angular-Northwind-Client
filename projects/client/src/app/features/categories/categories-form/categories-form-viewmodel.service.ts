@@ -5,17 +5,19 @@ import { AppBaseViewModelService } from '../../../core/app-base-viewmodel.servic
 import { CategoriesDto } from '../../../models/categoriesDto';
 import { CategoriesService } from '../categories.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatDialog} from '@angular/material/dialog';
 
 @Injectable()
 export class CategoriesFormViewModelService extends AppBaseViewModelService<CategoriesDto> {
   constructor(
 		public override injector: Injector,
 		private categoriesService: CategoriesService,
+    public override dialog: MatDialog,
     public override snackBar: MatSnackBar,
     public override route: ActivatedRoute,
     public override router: Router
 	) {
-		super(injector, snackBar, route, router);
+		super(injector, dialog, snackBar, route, router);
 	}
 
 	override ngOnInit(): void {
