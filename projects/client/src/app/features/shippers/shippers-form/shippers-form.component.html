@@ -1,0 +1,27 @@
+<mt-single-full
+	[formTitle]="formTitle"
+	[VM]="VM"
+	[formStatus]="frmStatus"></mt-single-full>
+<!-- Form -->
+<form #frm="ngForm" (change)="formStatus(frm)">
+	<div class="form-container mat-elevation-z5">
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'Company Name'"
+			[placeHolder]="'Enter the company name'"
+			[(ngModel)]="VM.model && VM.model.CompanyName"
+			name="companyname"
+			[required]="true">
+		</mt-input-text>
+		<mt-input-text
+			class="mat-form-field"
+			style="width: 400px"
+			[label]="'Phone'"
+			[placeHolder]="'Enter the phone'"
+			[(ngModel)]="VM.model && VM.model.Phone"
+			name="phone"
+			[required]="true">
+		</mt-input-text>
+	</div>
+</form>
+<!-- Form -->

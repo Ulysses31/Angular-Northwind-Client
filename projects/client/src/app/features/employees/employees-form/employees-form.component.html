@@ -1,0 +1,141 @@
+<mt-single-full
+	[formTitle]="formTitle"
+	[VM]="VM"
+	[formStatus]="frmStatus"></mt-single-full>
+<!-- Form -->
+<form #frm="ngForm" (change)="formStatus(frm)">
+	<div class="form-container mat-elevation-z5">
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'Last Name'"
+			[placeHolder]="'Enter the lastname'"
+			[(ngModel)]="VM.model && VM.model.LastName"
+			name="lastname"
+			[required]="true">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'First Name'"
+			[placeHolder]="'Enter the firstname'"
+			[(ngModel)]="VM.model && VM.model.FirstName"
+			name="firstname"
+			[required]="true">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Title'"
+			[placeHolder]="'Enter the title'"
+			[(ngModel)]="VM.model && VM.model.Title"
+			name="title"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'TitleOfCourtesy'"
+			[placeHolder]="'Enter the title of courtesy'"
+			[(ngModel)]="VM.model && VM.model.TitleOfCourtesy"
+			name="titleofcourtesy"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-date
+      class="mat-form-field"
+      [label]="'BirthDate'"
+			[placeHolder]="'Enter the birth date'"
+      [(ngModel)]="VM.model && VM.model.BirthDate"
+      name="birthdate"
+    >
+    </mt-input-date>
+    <mt-input-date
+      class="mat-form-field"
+      [label]="'Hire Date'"
+			[placeHolder]="'Enter the hire date'"
+      [(ngModel)]="VM.model && VM.model.HireDate"
+      name="hiredate"
+    >
+    </mt-input-date>
+    <mt-input-text
+			class="mat-form-field"
+      style="width: 415px"
+			[label]="'Address'"
+			[placeHolder]="'Enter the address'"
+			[(ngModel)]="VM.model && VM.model.Address"
+			name="address"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'City'"
+			[placeHolder]="'Enter the city'"
+			[(ngModel)]="VM.model && VM.model.City"
+			name="city"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Region'"
+			[placeHolder]="'Enter the region'"
+			[(ngModel)]="VM.model && VM.model.Region"
+			name="region"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'PostalCode'"
+			[placeHolder]="'Enter the postal code'"
+			[(ngModel)]="VM.model && VM.model.PostalCode"
+			name="postalcode"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Country'"
+			[placeHolder]="'Enter the country'"
+			[(ngModel)]="VM.model && VM.model.Country"
+			name="country"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'HomePhone'"
+			[placeHolder]="'Enter the home phone'"
+			[(ngModel)]="VM.model && VM.model.HomePhone"
+			name="homephone"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Extension'"
+			[placeHolder]="'Enter the extension'"
+			[(ngModel)]="VM.model && VM.model.Extension"
+			name="extension"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+      style="width: 845px"
+			[label]="'Notes'"
+			[placeHolder]="'Enter the notes'"
+			[(ngModel)]="VM.model && VM.model.Notes"
+			name="notes"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'ReportsTo'"
+			[placeHolder]="'Enter the reports to'"
+			[(ngModel)]="VM.model && VM.model.ReportsTo"
+			name="reportsto"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+      style="width: 630px"
+			[label]="'PhotoPath'"
+			[placeHolder]="'Enter the photo path'"
+			[(ngModel)]="VM.model && VM.model.PhotoPath"
+			name="photopath"
+			[required]="false">
+		</mt-input-text>
+	</div>
+</form>
+<!-- Form -->

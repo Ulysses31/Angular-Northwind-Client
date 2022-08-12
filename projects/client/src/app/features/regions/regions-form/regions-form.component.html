@@ -1,0 +1,18 @@
+<mt-single-full
+	[formTitle]="formTitle"
+	[VM]="VM"
+	[formStatus]="frmStatus"></mt-single-full>
+<!-- Form -->
+<form #frm="ngForm" (change)="formStatus(frm)">
+	<div class="form-container mat-elevation-z5">
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'Region Description'"
+			[placeHolder]="'Enter the region description'"
+			[(ngModel)]="VM.model && VM.model.RegionDescription"
+			name="regionDescription"
+			[required]="true">
+		</mt-input-text>
+	</div>
+</form>
+<!-- Form -->

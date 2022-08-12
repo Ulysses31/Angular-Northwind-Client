@@ -1,4 +1,3 @@
-import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
 	AfterViewInit,
@@ -6,9 +5,7 @@ import {
 	EventEmitter,
 	Input,
 	OnDestroy,
-	OnInit,
-	TemplateRef,
-	ViewChild
+	OnInit
 } from '@angular/core';
 import { TooltipPosition } from '@angular/material/tooltip';
 import { ImtActionToolbarItems } from '../../interfaces/mtActionToolbarItems';
@@ -38,9 +35,8 @@ import { MtSingleViewModelService } from '../../viewmodel/single-viewmodel.servi
 					[matTooltipPosition]="tipPosition"
 					[matTooltipShowDelay]="1000"
 					(click)="btn?.command()"
-          [disabled]="btn.disabled"
-        >
-					<mat-icon [ngStyle]="{ 'color': btn.color }">{{
+					[disabled]="btn.disabled">
+					<mat-icon [ngStyle]="{ color: btn.color }">{{
 						btn.icon
 					}}</mat-icon>
 				</button>
@@ -68,14 +64,14 @@ export class MtSingleFullComponent
 	@Input() color: MaterialColor = MaterialColor.Basic;
 	@Input() mode: ProgrBarMode = ProgrBarMode.Query;
 	@Input() formTitle: string = '';
-  @Input() formStatus?: EventEmitter<string | null>;
+	@Input() formStatus?: EventEmitter<string | null>;
 	@Input() actionBarItems: ImtActionToolbarItems[] = [
 		{
 			id: 'back',
 			icon: 'arrow_back',
 			toolTipMessage: 'Back to browser',
-      color: 'black',
-      disabled: false,
+			color: 'black',
+			disabled: false,
 			command: () => {
 				this.router.navigate([this.VM?.backUrl]);
 			}
@@ -84,8 +80,8 @@ export class MtSingleFullComponent
 			id: 'save',
 			icon: 'save',
 			toolTipMessage: 'Save',
-      color: 'yellowgreen',
-      disabled: true,
+			color: 'yellowgreen',
+			disabled: true,
 			command: () => {
 				var id: string = this.getIdfromRoute();
 				this.VM?.performSave(id);
@@ -95,8 +91,8 @@ export class MtSingleFullComponent
 			id: 'delete',
 			icon: 'delete',
 			toolTipMessage: 'Delete',
-      color: 'orangered',
-      disabled: false,
+			color: 'orangered',
+			disabled: false,
 			command: () => {
 				var id: string = this.getIdfromRoute();
 				this.VM?.performDelete(id);
@@ -106,8 +102,8 @@ export class MtSingleFullComponent
 			id: 'refresh',
 			icon: 'cached',
 			toolTipMessage: 'Refresh data',
-      color: 'black',
-      disabled: false,
+			color: 'black',
+			disabled: false,
 			command: () => this.callGetModel()
 		},
 		{
@@ -115,7 +111,7 @@ export class MtSingleFullComponent
 			icon: 'build',
 			toolTipMessage: 'View model',
 			color: 'black',
-      disabled: false,
+			disabled: false,
 			command: () => this.viewModel()
 		}
 	];
@@ -129,14 +125,14 @@ export class MtSingleFullComponent
 		this.VM?.ngOnInit();
 		this.callGetModel();
 
-    this.formStatus?.subscribe((data) => {
-      // console.log(data);
-      if(data === 'INVALID') {
-        this.actionBarItems[1].disabled = true;
-      } else {
-        this.actionBarItems[1].disabled = false;
-      }
-    });
+		this.formStatus?.subscribe((data) => {
+			// console.log(data);
+			if (data === 'INVALID') {
+				this.actionBarItems[1].disabled = true;
+			} else {
+				this.actionBarItems[1].disabled = false;
+			}
+		});
 	}
 
 	ngAfterViewInit(): void {
@@ -153,7 +149,7 @@ export class MtSingleFullComponent
 
 	private callGetModel(): void {
 		this.route.params.subscribe((data: any) => {
-			if (parseInt(data.id) > 0) {
+			if (parseInt(data.id) > 0 || isNaN(data.id)) {
 				this.VM?.getModel(data.id);
 			} else {
 				this.VM?.performReset();

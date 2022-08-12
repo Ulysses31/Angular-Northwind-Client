@@ -14,7 +14,56 @@ const routes: Routes = [
 						(m) => m.CategoriesModule
 					)
 			},
-			{ path: '**', redirectTo: 'posts' }
+			{
+				path: 'regions',
+				loadChildren: () =>
+					import('../features/regions/regions.module').then(
+						(m) => m.RegionsModule
+					)
+			},
+			{
+				path: 'shippers',
+				loadChildren: () =>
+					import('../features/shippers/shippers.module').then(
+						(m) => m.ShippersModule
+					)
+			},
+      {
+				path: 'territories',
+				loadChildren: () =>
+					import('../features/territories/territories.module').then(
+						(m) => m.TerritoriesModule
+					)
+			},
+      {
+				path: 'customers',
+				loadChildren: () =>
+					import('../features/customers/customers.module').then(
+						(m) => m.CustomersModule
+					)
+			},
+      {
+				path: 'employees',
+				loadChildren: () =>
+					import('../features/employees/employees.module').then(
+						(m) => m.EmployeesModule
+					)
+			},
+      {
+				path: 'employee-territories',
+				loadChildren: () =>
+					import('../features/employee-territories/employee-territories.module').then(
+						(m) => m.EmployeeTerritoriesModule
+					)
+			},
+      {
+				path: 'products',
+				loadChildren: () =>
+					import('../features/products/products.module').then(
+						(m) => m.ProductsModule
+					)
+			},
+			{ path: '**', redirectTo: '' }
 		]
 	}
 ];

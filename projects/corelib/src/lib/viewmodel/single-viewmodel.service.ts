@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { MtBaseEntity } from '../models/base-entity';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MtDialogComponent } from '../controls/mt-dialog/mt-dialog.component';
@@ -48,18 +48,21 @@ export abstract class MtSingleViewModelService<
 	ngOnDestroy(): void {}
 
 	public getModel(id: string): void {
-		// 	const idx = this.headerActions.findIndex(
-		// 		(item) => item.id === 'save'
-		// 	);
 		this.isBusy = true;
-		this.getById(id.toString()).subscribe({
+		this.getById(id)
+    .subscribe({
 			next: (result: any) => {
 				// console.log(result.data);
-				this.isBusy = false;
-				this.model = result.data as TModel;
-				// if (this.headerActions[idx].disabled) {
-				// 	this.headerActions[idx].disabled = false;
-				// }
+				if (result.status === 500) {
+					console.log(result.response.error);
+					this.openSnackBar(
+						`[${result.message}] - ${result.response.error}`,
+						'Close'
+					);
+				} else {
+					this.isBusy = false;
+					this.model = result.data as TModel;
+				}
 			},
 			error: (err) => {
 				this.isBusy = false;
@@ -71,17 +74,11 @@ export abstract class MtSingleViewModelService<
 	}
 
 	public performReset(): void {
-		// const idx = this.headerActions.findIndex(
-		// 	(item) => item.id === 'save'
-		// );
 		this.resetDto(this.model as TModel).subscribe({
 			next: (result: any) => {
-				console.log(result);
+				// console.log(result);
 				this.isBusy = false;
 				this.model = result as TModel;
-				// if (this.headerActions[idx].disabled) {
-				// 	this.headerActions[idx].disabled = false;
-				// }
 			},
 			error: (err) => {
 				this.isBusy = false;
@@ -96,13 +93,22 @@ export abstract class MtSingleViewModelService<
 		this.isBusy = true;
 		if (id === '0') {
 			this.postDto(this.model!).subscribe({
-				next: (data) => {
+				next: (data: any) => {
 					// console.log(data);
-					this.openSnackBar('Successfully created!', 'Close');
-					this.performReset();
+					if (data.status === 500) {
+						console.log(data.response.error);
+						this.openSnackBar(
+							`[${data.message}] - ${data.response.error}`,
+							'Close'
+						);
+					} else {
+						this.openSnackBar('Successfully created!', 'Close');
+						this.performReset();
+					}
 				},
 				error: (err) => {
 					this.isBusy = false;
+					console.log(err);
 					this.openSnackBar(
 						`[${err.name}] - ${err.message}`,
 						'Close'
@@ -113,9 +119,17 @@ export abstract class MtSingleViewModelService<
 			});
 		} else {
 			this.putDto(id, this.model!).subscribe({
-				next: (data) => {
+				next: (data: any) => {
 					// console.log(data);
-					this.openSnackBar('Successfully modified!', 'Close');
+					if (data.status === 500) {
+						console.log(data.response.error);
+						this.openSnackBar(
+							`[${data.message}] - ${data.response.error}`,
+							'Close'
+						);
+					} else {
+						this.openSnackBar('Successfully modified!', 'Close');
+					}
 				},
 				error: (err) => {
 					this.isBusy = false;
@@ -142,10 +156,18 @@ export abstract class MtSingleViewModelService<
 				if (result) {
 					this.isBusy = true;
 					this.deleteDto(id).subscribe({
-						next: (data) => {
+						next: (data: any) => {
 							// console.log(data);
-							this.openSnackBar('Successfully deleted!', 'Close');
-							this.performReset();
+							if (data.status === 500) {
+								console.log(data.response.error);
+								this.openSnackBar(
+									`[${data.message}] - ${data.response.error}`,
+									'Close'
+								);
+							} else {
+								this.openSnackBar('Successfully deleted!', 'Close');
+								this.performReset();
+							}
 						},
 						error: (err) => {
 							this.isBusy = false;

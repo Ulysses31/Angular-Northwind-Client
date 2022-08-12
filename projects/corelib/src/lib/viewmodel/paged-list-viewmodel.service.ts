@@ -46,7 +46,15 @@ export abstract class MtPagedListViewModelService<
 		this.search({}).subscribe({
 			next: (result: any) => {
 				// console.log(result.data);
-				this.generateGrid(result.data as TModel[]);
+				if (result.status === 500) {
+					console.log(result.response.error);
+					this.openSnackBar(
+						`[${result.message}] - ${result.response.error}`,
+						'Close'
+					);
+				} else {
+					this.generateGrid(result.data as TModel[]);
+				}
 			},
 			error: (err) => {
 				this.isBusy = false;

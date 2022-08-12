@@ -67,7 +67,7 @@ import { MtListSection } from '../../models/mt-list-section';
           Options selected: {{ listItems.selectedOptions.selected.length }}
         </span>
         <span *ngIf="!isSelectionMultiple">
-          Selected value: {{ listItems.selectedOptions.selected[0]?.value }}
+          Selected value: {{ listItems.selectedOptions.selected[0].value }}
         </span>
       </p>
     </ng-container>

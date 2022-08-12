@@ -106,6 +106,7 @@ import { MtPagedListViewModelService } from '../../viewmodel/paged-list-viewmode
 						*matHeaderRowDef="this.VM?.columnDefs"></tr>
 					<tr
 						mat-row
+            matRipple
 						*matRowDef="let row; columns: this.VM?.columnDefs"></tr>
 				</table>
 				<mat-paginator
@@ -199,7 +200,8 @@ export class MtPagedListFullComponent
 
 	constructor(
 		private _liveAnnouncer: LiveAnnouncer,
-		private router: Router
+		private router: Router,
+		private route: ActivatedRoute,
 	) {
 		console.log('[OnInit MtPagedListFullComponent]');
 	}
@@ -223,7 +225,7 @@ export class MtPagedListFullComponent
 			this.matTableDs.paginator = this.paginator;
 			this.matTableDs.sort = this.sort;
 			this.matTableDs.selection = this.selection;
-		});
+		}, 1000);
 	}
 
 	ngOnDestroy(): void {
@@ -260,6 +262,7 @@ export class MtPagedListFullComponent
 	}
 
 	private editSelectedItem(): void {
+    const url = this.getCurrentRouteUrl();
 		if (this.selection.selected.length > 0) {
 			this.selection.selected.map((item: any) => {
 				if (item) {
@@ -269,7 +272,7 @@ export class MtPagedListFullComponent
 						item
 					]) as string;
 					let id: string = item[idName];
-					this.router.navigate(['/categories', id], {
+					this.router.navigate([url, id], {
 						queryParams: { backUrl: this.router.url }
 					});
 				}
@@ -280,7 +283,8 @@ export class MtPagedListFullComponent
 	}
 
 	private insertNewItem(): void {
-		this.router.navigate(['/categories', 0], {
+    const url = this.getCurrentRouteUrl();
+		this.router.navigate([url, 0], {
 			queryParams: { backUrl: this.router.url }
 		});
 	}
@@ -288,4 +292,9 @@ export class MtPagedListFullComponent
 	public viewModel(): void {
 		this.toggleViewModel = !this.toggleViewModel;
 	}
+
+  private getCurrentRouteUrl(): string {
+    const url: any = this.route.root.snapshot;
+    return url._routerState.url;
+  }
 }

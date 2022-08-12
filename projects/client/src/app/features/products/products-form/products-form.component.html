@@ -1,0 +1,82 @@
+<mt-single-full
+	[formTitle]="formTitle"
+	[VM]="VM"
+	[formStatus]="frmStatus"></mt-single-full>
+<!-- Form -->
+<form #frm="ngForm" (change)="formStatus(frm)">
+	<div class="form-container mat-elevation-z5">
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'Product Name'"
+			[placeHolder]="'Enter the product name'"
+			[(ngModel)]="VM.model && VM.model.ProductName"
+			name="productname"
+			[required]="true">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Supplier ID'"
+			[placeHolder]="'Enter the supplier id'"
+			[(ngModel)]="VM.model && VM.model.SupplierID"
+			name="supplierid"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'CategoryID'"
+			[placeHolder]="'Enter the category id'"
+			[(ngModel)]="VM.model && VM.model.CategoryID"
+			name="categoryid"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'QuantityPerUnit'"
+			[placeHolder]="'Enter the quantity per unit'"
+			[(ngModel)]="VM.model && VM.model.QuantityPerUnit"
+			name="quantityperunit"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'UnitPrice'"
+			[placeHolder]="'Enter the unit price'"
+			[(ngModel)]="VM.model && VM.model.UnitPrice"
+			name="unitprice"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'UnitsInStock'"
+			[placeHolder]="'Enter the units in stock'"
+			[(ngModel)]="VM.model && VM.model.UnitsInStock"
+			name="unitsinstock"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'UnitsOnOrder'"
+			[placeHolder]="'Enter the units on order'"
+			[(ngModel)]="VM.model && VM.model.UnitsOnOrder"
+			name="unitsonorder"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'ReorderLevel'"
+			[placeHolder]="'Enter the reorder level'"
+			[(ngModel)]="VM.model && VM.model.ReorderLevel"
+			name="reorderlevel"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Discontinued'"
+			[placeHolder]="'Enter the discontinued'"
+			[(ngModel)]="VM.model && VM.model.Discontinued"
+			name="discontinued"
+			[required]="true">
+		</mt-input-text>
+	</div>
+</form>
+<!-- Form -->

@@ -1,0 +1,99 @@
+<mt-single-full
+	[formTitle]="formTitle"
+	[VM]="VM"
+	[formStatus]="frmStatus"></mt-single-full>
+<!-- Form -->
+<form #frm="ngForm" (change)="formStatus(frm)">
+	<div class="form-container mat-elevation-z5">
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'Customer ID'"
+			[placeHolder]="'Enter the customer id'"
+			[(ngModel)]="VM.model && VM.model.CustomerID"
+			name="customerid"
+			[required]="true">
+		</mt-input-text>
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'Company Name'"
+			[placeHolder]="'Enter the company name'"
+			[(ngModel)]="VM.model && VM.model.CompanyName"
+			name="companyname"
+			[required]="true">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Contact Name'"
+			[placeHolder]="'Enter the contact name'"
+			[(ngModel)]="VM.model && VM.model.ContactName"
+			name="contactname"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Contact Title'"
+			[placeHolder]="'Enter the contact title'"
+			[(ngModel)]="VM.model && VM.model.ContactTitle"
+			name="contacttitle"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+      style="width: 415px"
+			[label]="'Address'"
+			[placeHolder]="'Enter the address'"
+			[(ngModel)]="VM.model && VM.model.Address"
+			name="address"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+      [label]="'City'"
+			[placeHolder]="'Enter the city'"
+			[(ngModel)]="VM.model && VM.model.City"
+			name="city"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+      [label]="'Region'"
+			[placeHolder]="'Enter the region'"
+			[(ngModel)]="VM.model && VM.model.Region"
+			name="region"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+      [label]="'PostalCode'"
+			[placeHolder]="'Enter the postalCode'"
+			[(ngModel)]="VM.model && VM.model.PostalCode"
+			name="postalCode"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+      [label]="'Country'"
+			[placeHolder]="'Enter the country'"
+			[(ngModel)]="VM.model && VM.model.Country"
+			name="country"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+      [label]="'Phone'"
+			[placeHolder]="'Enter the phone'"
+			[(ngModel)]="VM.model && VM.model.Phone"
+			name="phone"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+      [label]="'Fax'"
+			[placeHolder]="'Enter the fax'"
+			[(ngModel)]="VM.model && VM.model.Fax"
+			name="fax"
+			[required]="false">
+		</mt-input-text>
+	</div>
+</form>
+<!-- Form -->

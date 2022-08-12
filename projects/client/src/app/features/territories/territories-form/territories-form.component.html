@@ -1,0 +1,35 @@
+<mt-single-full
+	[formTitle]="formTitle"
+	[VM]="VM"
+	[formStatus]="frmStatus"></mt-single-full>
+<!-- Form -->
+<form #frm="ngForm" (change)="formStatus(frm)">
+	<div class="form-container mat-elevation-z5">
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'Territory ID'"
+			[placeHolder]="'Enter the territory id'"
+			[(ngModel)]="VM.model && VM.model.TerritoryID"
+			name="territoryid"
+			[required]="true">
+		</mt-input-text>
+		<mt-input-text
+			class="mat-form-field"
+			style="width: 400px"
+			[label]="'Territory Description'"
+			[placeHolder]="'Enter the territory description'"
+			[(ngModel)]="VM.model && VM.model.TerritoryDescription"
+			name="territorydescription"
+			[required]="true">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Region ID'"
+			[placeHolder]="'Enter the region id'"
+			[(ngModel)]="VM.model && VM.model.RegionID"
+			name="regionid"
+			[required]="true">
+		</mt-input-text>
+	</div>
+</form>
+<!-- Form -->
