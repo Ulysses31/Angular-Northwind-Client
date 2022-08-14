@@ -1,0 +1,50 @@
+<mt-single-full
+	[formTitle]="formTitle"
+	[VM]="VM"
+	[formStatus]="frmStatus"></mt-single-full>
+<!-- Form -->
+<form #frm="ngForm" (change)="formStatus(frm)">
+	<div class="form-container mat-elevation-z5">
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'OrderID'"
+			[placeHolder]="'Enter the order id'"
+			[(ngModel)]="VM.model && VM.model.OrderID"
+			name="orderid"
+			[required]="true">
+		</mt-input-text>
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'ProductID'"
+			[placeHolder]="'Enter the product id'"
+			[(ngModel)]="VM.model && VM.model.ProductID"
+			name="productid"
+			[required]="true">
+		</mt-input-text>
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'UnitPrice'"
+			[placeHolder]="'Enter the unit price'"
+			[(ngModel)]="VM.model && VM.model.UnitPrice"
+			name="unitprice"
+			[required]="true">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Quantity'"
+			[placeHolder]="'Enter the quantity'"
+			[(ngModel)]="VM.model && VM.model.Quantity"
+			name="quantity"
+			[required]="true">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Discount'"
+			[placeHolder]="'Enter the discount'"
+			[(ngModel)]="VM.model && VM.model.Discount"
+			name="discount"
+			[required]="true">
+		</mt-input-text>
+	</div>
+</form>
+<!-- Form -->

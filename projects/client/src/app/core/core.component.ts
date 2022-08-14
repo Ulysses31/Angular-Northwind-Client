@@ -88,6 +88,18 @@ export class CoreComponent implements OnInit, OnDestroy {
 			}
 		},
     {
+			text: 'Orders',
+			command: () => {
+				this.router.navigateByUrl('/orders');
+			}
+		},
+    {
+			text: 'Order Details',
+			command: () => {
+				this.router.navigateByUrl('/order-details');
+			}
+		},
+    {
 			text: 'Products',
 			command: () => {
 				this.router.navigateByUrl('/products');

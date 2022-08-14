@@ -1,0 +1,113 @@
+<mt-single-full
+	[formTitle]="formTitle"
+	[VM]="VM"
+	[formStatus]="frmStatus"></mt-single-full>
+<!-- Form -->
+<form #frm="ngForm" (change)="formStatus(frm)">
+	<div class="form-container mat-elevation-z5">
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'CustomerID'"
+			[placeHolder]="'Enter the customer id'"
+			[(ngModel)]="VM.model && VM.model.CustomerID"
+			name="customerid"
+			[required]="false">
+		</mt-input-text>
+		<mt-input-text
+			class="mat-form-field"
+			[label]="'EmployeeID'"
+			[placeHolder]="'Enter the employee id'"
+			[(ngModel)]="VM.model && VM.model.EmployeeID"
+			name="employeeid"
+			[required]="false">
+		</mt-input-text>
+		<mt-input-date
+			class="mat-form-field"
+			[label]="'OrderDate'"
+			[placeHolder]="'Enter the order date'"
+			[(ngModel)]="VM.model && VM.model.OrderDate"
+			name="orderdate">
+		</mt-input-date>
+    <mt-input-date
+			class="mat-form-field"
+			[label]="'RequiredDate'"
+			[placeHolder]="'Enter the required date'"
+			[(ngModel)]="VM.model && VM.model.RequiredDate"
+			name="requireddate">
+		</mt-input-date>
+    <mt-input-date
+			class="mat-form-field"
+			[label]="'ShippedDate'"
+			[placeHolder]="'Enter the shipped date'"
+			[(ngModel)]="VM.model && VM.model.ShippedDate"
+			name="shippeddate">
+		</mt-input-date>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'ShipVia'"
+			[placeHolder]="'Enter the ship via'"
+			[(ngModel)]="VM.model && VM.model.ShipVia"
+			name="shipvia"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'Freight'"
+			[placeHolder]="'Enter the freight'"
+			[(ngModel)]="VM.model && VM.model.Freight"
+			name="freight"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+      style="width: 415px"
+			[label]="'ShipName'"
+			[placeHolder]="'Enter the ship name'"
+			[(ngModel)]="VM.model && VM.model.ShipName"
+			name="shipname"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+      style="width: 415px"
+			[label]="'ShipAddress'"
+			[placeHolder]="'Enter the ship address'"
+			[(ngModel)]="VM.model && VM.model.ShipAddress"
+			name="shipaddress"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'ShipCity'"
+			[placeHolder]="'Enter the ship city'"
+			[(ngModel)]="VM.model && VM.model.ShipCity"
+			name="shipcity"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'ShipRegion'"
+			[placeHolder]="'Enter the ship region'"
+			[(ngModel)]="VM.model && VM.model.ShipRegion"
+			name="shipregion"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'ShipPostalCode'"
+			[placeHolder]="'Enter the ship postal code'"
+			[(ngModel)]="VM.model && VM.model.ShipPostalCode"
+			name="shippostalcode"
+			[required]="false">
+		</mt-input-text>
+    <mt-input-text
+			class="mat-form-field"
+			[label]="'ShipCountry'"
+			[placeHolder]="'Enter the ship country'"
+			[(ngModel)]="VM.model && VM.model.ShipCountry"
+			name="shipcountry"
+			[required]="false">
+		</mt-input-text>
+	</div>
+</form>
+<!-- Form -->

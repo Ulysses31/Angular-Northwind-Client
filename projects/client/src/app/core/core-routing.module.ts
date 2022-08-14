@@ -63,6 +63,20 @@ const routes: Routes = [
 						(m) => m.ProductsModule
 					)
 			},
+      {
+				path: 'orders',
+				loadChildren: () =>
+					import('../features/orders/orders.module').then(
+						(m) => m.OrdersModule
+					)
+			},
+      {
+				path: 'order-details',
+				loadChildren: () =>
+					import('../features/order-details/order-details.module').then(
+						(m) => m.OrderDetailsModule
+					)
+			},
 			{ path: '**', redirectTo: '' }
 		]
 	}
