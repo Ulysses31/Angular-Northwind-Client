@@ -36,7 +36,7 @@ import { MtSingleViewModelService } from '../../viewmodel/single-viewmodel.servi
 					[matTooltipShowDelay]="1000"
 					(click)="btn?.command()"
 					[disabled]="btn.disabled">
-					<mat-icon [ngStyle]="{ color: btn.color }">{{
+					<mat-icon>{{
 						btn.icon
 					}}</mat-icon>
 				</button>
@@ -61,7 +61,7 @@ export class MtSingleFullComponent
 	readonly tipPosition: TooltipPosition = 'above';
 	toggleViewModel: boolean = false;
 	@Input() VM?: MtSingleViewModelService<MtBaseEntity>;
-	@Input() color: MaterialColor = MaterialColor.Basic;
+	@Input() color: MaterialColor = MaterialColor.Primary;
 	@Input() mode: ProgrBarMode = ProgrBarMode.Query;
 	@Input() formTitle: string = '';
 	@Input() formStatus?: EventEmitter<string | null>;
@@ -70,7 +70,7 @@ export class MtSingleFullComponent
 			id: 'back',
 			icon: 'arrow_back',
 			toolTipMessage: 'Back to browser',
-			color: 'black',
+			color: '',
 			disabled: false,
 			command: () => {
 				this.router.navigate([this.VM?.backUrl]);
@@ -80,7 +80,7 @@ export class MtSingleFullComponent
 			id: 'save',
 			icon: 'save',
 			toolTipMessage: 'Save',
-			color: 'yellowgreen',
+			color: '',
 			disabled: true,
 			command: () => {
 				var id: string = this.getIdfromRoute();
@@ -91,7 +91,7 @@ export class MtSingleFullComponent
 			id: 'delete',
 			icon: 'delete',
 			toolTipMessage: 'Delete',
-			color: 'orangered',
+			color: '',
 			disabled: false,
 			command: () => {
 				var id: string = this.getIdfromRoute();
@@ -102,7 +102,7 @@ export class MtSingleFullComponent
 			id: 'refresh',
 			icon: 'cached',
 			toolTipMessage: 'Refresh data',
-			color: 'black',
+			color: '',
 			disabled: false,
 			command: () => this.callGetModel()
 		},
@@ -110,7 +110,7 @@ export class MtSingleFullComponent
 			id: 'model',
 			icon: 'build',
 			toolTipMessage: 'View model',
-			color: 'black',
+			color: '',
 			disabled: false,
 			command: () => this.viewModel()
 		}

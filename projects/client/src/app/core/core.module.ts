@@ -9,7 +9,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MenuBarModule } from '../layout/menubar/menubar.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
-
 @NgModule({
   declarations: [
     CoreComponent

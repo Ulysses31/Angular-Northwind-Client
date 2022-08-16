@@ -34,13 +34,12 @@ import { MtSidebarMenuItem } from 'dist/corelib/lib/interfaces/mtSidebarMenuItem
 				</ul>
 			</mat-drawer>
 			<mat-drawer-content
-				class="main-content"
-				style="background-color: #fff">
+				class="main-content">
 				<!-- #### Main ### -->
 				<app-menubar (isOn)="onOpened()"></app-menubar>
-        <div style="margin: 20px 10px 10px 10px">
-				  <router-outlet></router-outlet>
-        </div>
+				<div style="margin: 20px 10px 10px 10px">
+					<router-outlet></router-outlet>
+				</div>
 				<!-- #### Main ### -->
 				<br />
 			</mat-drawer-content>
@@ -69,55 +68,55 @@ export class CoreComponent implements OnInit, OnDestroy {
 				this.router.navigateByUrl('/categories');
 			}
 		},
-    {
+		{
 			text: 'Customers',
 			command: () => {
 				this.router.navigateByUrl('/customers');
 			}
 		},
-    {
+		{
 			text: 'Employees',
 			command: () => {
 				this.router.navigateByUrl('/employees');
 			}
 		},
-    {
+		{
 			text: 'Employee Territories',
 			command: () => {
 				this.router.navigateByUrl('/employee-territories');
 			}
 		},
-    {
+		{
 			text: 'Orders',
 			command: () => {
 				this.router.navigateByUrl('/orders');
 			}
 		},
-    {
+		{
 			text: 'Order Details',
 			command: () => {
 				this.router.navigateByUrl('/order-details');
 			}
 		},
-    {
+		{
 			text: 'Products',
 			command: () => {
 				this.router.navigateByUrl('/products');
 			}
 		},
-    {
+		{
 			text: 'Regions',
 			command: () => {
 				this.router.navigateByUrl('/regions');
 			}
 		},
-    {
+		{
 			text: 'Shippers',
 			command: () => {
 				this.router.navigateByUrl('/shippers');
 			}
 		},
-    {
+		{
 			text: 'Territories',
 			command: () => {
 				this.router.navigateByUrl('/territories');

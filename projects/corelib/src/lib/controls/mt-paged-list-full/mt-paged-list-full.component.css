@@ -2,14 +2,8 @@ table {
   width: 100%;
 }
 
-/* .mat-row .mat-cell {
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
-  cursor: pointer;
-}
- */
 .mat-row:hover .mat-cell {
-  background-color: #f3f3f3 ;
+  background-color: rgba(216, 216, 216, 0.1) ;
 }
 
 th.mat-sort-header-sorted {
@@ -25,7 +19,6 @@ th.mat-sort-header-sorted {
 }
 
 .action-toolbar .mat-toolbar {
-  background-color: #fff;
   height: 50px;
 }
 

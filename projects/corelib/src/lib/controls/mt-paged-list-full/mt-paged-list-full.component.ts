@@ -40,7 +40,7 @@ import { MtPagedListViewModelService } from '../../viewmodel/paged-list-viewmode
 					[matTooltipPosition]="tipPosition"
 					[matTooltipShowDelay]="1000"
 					(click)="btn?.command()">
-					<mat-icon [ngStyle]="{ color: btn.color }">{{
+					<mat-icon>{{
 						btn.icon
 					}}</mat-icon>
 				</button>
@@ -80,7 +80,7 @@ import { MtPagedListViewModelService } from '../../viewmodel/paged-list-viewmode
 							mat-cell
 							*matCellDef="let element"
 							[ngStyle]="{
-								'background-color': element.checked ? '#f3f3f3' : ''
+								'background-color': element.checked ? 'rgb(216, 216, 216, 0.1)' : ''
 							}">
 							<mat-checkbox
 								#mtCheck
@@ -138,14 +138,14 @@ export class MtPagedListFullComponent
 	@Input() pageSizeOptions: number[] = [5, 10, 25, 100];
 	@Input() hasPagination: boolean = true;
 	@Input() isSelectable: boolean = true;
-	@Input() color: MaterialColor = MaterialColor.Basic;
+	@Input() color: MaterialColor = MaterialColor.Primary;
 	@Input() mode: ProgrBarMode = ProgrBarMode.Query;
 	@Input() actionBarItems: ImtActionToolbarItems[] = [
 		{
 			id: 'insert',
 			icon: 'add',
 			toolTipMessage: 'Insert new item',
-			color: 'yellowgreen',
+			color: '',
       disabled: false,
 			command: () => this.insertNewItem()
 		},
@@ -153,7 +153,7 @@ export class MtPagedListFullComponent
 			id: 'edit',
 			icon: 'edit',
 			toolTipMessage: 'Edit selected item',
-			color: 'yellowgreen',
+			color: '',
       disabled: false,
 			command: () => this.editSelectedItem()
 		},

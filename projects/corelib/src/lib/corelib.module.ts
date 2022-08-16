@@ -68,6 +68,7 @@ import { MtToolbarComponent } from './controls/mt-toolbar/mt-toolbar.component';
 import { MtPagedListFullComponent } from './controls/mt-paged-list-full/mt-paged-list-full.component';
 import { MtSingleFullComponent } from './controls/mt-single-full/mt-single-full.component';
 import { MtDialogComponent } from './controls/mt-dialog/mt-dialog.component';
+import { MtStyleManager } from './services/mtStyleManager';
 
 @NgModule({
   declarations: [
@@ -183,6 +184,6 @@ import { MtDialogComponent } from './controls/mt-dialog/mt-dialog.component';
     MtPagedListFullComponent,
     MtSingleFullComponent
   ],
-  providers: [],
+  providers: [MtStyleManager],
 })
 export class CorelibModule {}
