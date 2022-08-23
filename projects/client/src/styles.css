@@ -33,7 +33,7 @@ body {
 }
 
 .sidenav ul li {
-  background-color: #fafafa;
+  /* background-color: #fafafa; */
   list-style: none;
   cursor: pointer;
   padding: 10px;
@@ -42,6 +42,7 @@ body {
 
 .sidenav ul li:hover {
   background-color: #e4e4e4;
+  transition: all 0.5s;
 }
 
 .main-content {

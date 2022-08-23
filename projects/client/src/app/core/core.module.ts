@@ -9,6 +9,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MenuBarModule } from '../layout/menubar/menubar.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     CoreComponent
@@ -23,7 +24,8 @@ import { MatIconModule } from '@angular/material/icon';
    // SharedModule,
     MenuBarModule,
     MatSidenavModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule
   ],
   exports: []
 })
