@@ -17,6 +17,7 @@ import { MtInputAppearance } from '../../models/enums';
 			<input
 				type="text"
 				matInput
+				[disabled]="disabled"
 				[placeholder]="placeHolder"
 				[readonly]="readonly"
 				[(ngModel)]="value"
@@ -24,6 +25,7 @@ import { MtInputAppearance } from '../../models/enums';
 				[required]="required"
 				#input="ngModel" />
 			<button
+				[disabled]="disabled"
 				*ngIf="value"
 				matSuffix
 				mat-icon-button
@@ -49,6 +51,7 @@ import { MtInputAppearance } from '../../models/enums';
 export class MtInputTextComponent
 	implements OnInit, ControlValueAccessor
 {
+  @Input() disabled: boolean = false;
 	@Input() label: string = 'Material Text Input';
 	@Input() placeHolder: string = 'Material Text Input';
 	@Input() readonly: boolean = false;

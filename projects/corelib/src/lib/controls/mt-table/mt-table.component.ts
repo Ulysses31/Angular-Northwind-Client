@@ -16,7 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'mt-table',
   template: `
-    <div class="mat-elevation-z8">
+    <div class="mat-elevation-z5">
       <table
         mat-table
         [dataSource]="matTableDs"
@@ -39,7 +39,7 @@ import { MatTableDataSource } from '@angular/material/table';
           <td
             mat-cell
             *matCellDef="let element"
-            [ngStyle]="{ 'background-color': element.checked ? '#f3f3f3' : '' }"
+            [ngStyle]="{ 'background-color': element.checked ? 'rgb(216, 216, 216, 0.1)' : '' }"
           >
             <mat-checkbox
               #mtCheck
@@ -56,7 +56,6 @@ import { MatTableDataSource } from '@angular/material/table';
         <tr
           mat-row
           *matRowDef="let row; columns: displayedColumns"
-          (click)="command()"
         ></tr>
       </table>
       <mat-paginator
@@ -77,7 +76,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class MtTableComponent implements OnInit, AfterViewInit {
   pageEvent?: PageEvent;
   @Input() displayedColumns: string[] | undefined = [];
-  @Input() dataSource: any[] = [];
+  @Input() dataSource?: any;
   @Input() command: any;
   @Input() disabled: boolean = false;
   @Input() length: number | undefined = 0;
@@ -114,21 +113,31 @@ export class MtTableComponent implements OnInit, AfterViewInit {
       this.allowMultiSelect,
       this.initialSelection
     );
+    this.matTableDs.selection = this.selection;
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   public getSelected(sl: any, element: any) {
-    this.matTableDs.data.forEach((row: any) => {
-      if (row.id === element.id && sl.checked) {
-        this.selection.select(row);
-        this.selectedRows = this.selection.selected;
-      }
-      if (row.id === element.id && !sl.checked) {
-        this.selectedRows = this.selection.selected.filter((item: any) => {
-          return item.id !== element.id;
-        });
-      }
-    });
+    this.selection.clear();
+		this.matTableDs.forEach((row: any) => {
+			if (row !== element) {
+				row.checked = false;
+			}
+			if (element.checked) {
+				this.selection.select(element);
+			}
+		});
+    // this.matTableDs.data.forEach((row: any) => {
+    //   if (row.id === element.id && sl.checked) {
+    //     this.selection.select(row);
+    //     this.selectedRows = this.selection.selected;
+    //   }
+    //   if (row.id === element.id && !sl.checked) {
+    //     this.selectedRows = this.selection.selected.filter((item: any) => {
+    //       return item.id !== element.id;
+    //     });
+    //   }
+    // });
     // console.log(this.selectedRows);
   }
 

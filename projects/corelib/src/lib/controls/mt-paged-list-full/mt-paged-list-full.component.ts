@@ -40,9 +40,7 @@ import { MtPagedListViewModelService } from '../../viewmodel/paged-list-viewmode
 					[matTooltipPosition]="tipPosition"
 					[matTooltipShowDelay]="1000"
 					(click)="btn?.command()">
-					<mat-icon>{{
-						btn.icon
-					}}</mat-icon>
+					<mat-icon>{{ btn.icon }}</mat-icon>
 				</button>
 			</mat-toolbar>
 		</div>
@@ -80,7 +78,9 @@ import { MtPagedListViewModelService } from '../../viewmodel/paged-list-viewmode
 							mat-cell
 							*matCellDef="let element"
 							[ngStyle]="{
-								'background-color': element.checked ? 'rgb(216, 216, 216, 0.1)' : ''
+								'background-color': element.checked
+									? 'rgb(216, 216, 216, 0.1)'
+									: ''
 							}">
 							<mat-checkbox
 								#mtCheck
@@ -106,7 +106,7 @@ import { MtPagedListViewModelService } from '../../viewmodel/paged-list-viewmode
 						*matHeaderRowDef="this.VM?.columnDefs"></tr>
 					<tr
 						mat-row
-            matRipple
+						matRipple
 						*matRowDef="let row; columns: this.VM?.columnDefs"></tr>
 				</table>
 				<mat-paginator
@@ -140,13 +140,14 @@ export class MtPagedListFullComponent
 	@Input() isSelectable: boolean = true;
 	@Input() color: MaterialColor = MaterialColor.Primary;
 	@Input() mode: ProgrBarMode = ProgrBarMode.Query;
+	@Input() extraActionBarItems: ImtActionToolbarItems[] = [];
 	@Input() actionBarItems: ImtActionToolbarItems[] = [
 		{
 			id: 'insert',
 			icon: 'add',
 			toolTipMessage: 'Insert new item',
 			color: '',
-      disabled: false,
+			disabled: false,
 			command: () => this.insertNewItem()
 		},
 		{
@@ -154,7 +155,7 @@ export class MtPagedListFullComponent
 			icon: 'edit',
 			toolTipMessage: 'Edit selected item',
 			color: '',
-      disabled: false,
+			disabled: false,
 			command: () => this.editSelectedItem()
 		},
 		{
@@ -162,7 +163,7 @@ export class MtPagedListFullComponent
 			icon: 'cached',
 			toolTipMessage: 'Refresh data',
 			color: 'black',
-      disabled: false,
+			disabled: false,
 			command: () => {
 				this.VM !== undefined ? (this.VM.isBusy = true) : undefined;
 				this.VM?.search({}).subscribe((response: any) => {
@@ -178,7 +179,7 @@ export class MtPagedListFullComponent
 			icon: 'build',
 			toolTipMessage: 'View model',
 			color: 'black',
-      disabled: false,
+			disabled: false,
 			command: () => this.viewModel()
 		}
 	];
@@ -201,14 +202,14 @@ export class MtPagedListFullComponent
 	constructor(
 		private _liveAnnouncer: LiveAnnouncer,
 		private router: Router,
-		private route: ActivatedRoute,
+		private route: ActivatedRoute
 	) {
 		console.log('[OnInit MtPagedListFullComponent]');
 	}
 
 	ngOnInit(): void {
 		this.VM?.ngOnInit();
-    this.matTableDs = new MatTableDataSource([]);
+		this.matTableDs = new MatTableDataSource([]);
 	}
 
 	ngAfterViewInit(): void {
@@ -225,6 +226,9 @@ export class MtPagedListFullComponent
 			this.matTableDs.paginator = this.paginator;
 			this.matTableDs.sort = this.sort;
 			this.matTableDs.selection = this.selection;
+			this.actionBarItems.unshift(
+				...this.extraActionBarItems
+			);
 		}, 1000);
 	}
 
@@ -262,7 +266,7 @@ export class MtPagedListFullComponent
 	}
 
 	private editSelectedItem(): void {
-    const url = this.getCurrentRouteUrl();
+		const url = this.getCurrentRouteUrl();
 		if (this.selection.selected.length > 0) {
 			this.selection.selected.map((item: any) => {
 				if (item) {
@@ -283,7 +287,7 @@ export class MtPagedListFullComponent
 	}
 
 	private insertNewItem(): void {
-    const url = this.getCurrentRouteUrl();
+		const url = this.getCurrentRouteUrl();
 		this.router.navigate([url, 0], {
 			queryParams: { backUrl: this.router.url }
 		});
@@ -293,8 +297,8 @@ export class MtPagedListFullComponent
 		this.toggleViewModel = !this.toggleViewModel;
 	}
 
-  private getCurrentRouteUrl(): string {
-    const url: any = this.route.root.snapshot;
-    return url._routerState.url;
-  }
+	private getCurrentRouteUrl(): string {
+		const url: any = this.route.root.snapshot;
+		return url._routerState.url;
+	}
 }

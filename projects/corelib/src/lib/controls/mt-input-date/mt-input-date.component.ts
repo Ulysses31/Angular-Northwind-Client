@@ -12,6 +12,7 @@ import { MtInputAppearance } from '../../models/enums';
       [appearance]="appearance">
       <mat-label>{{ label }}</mat-label>
       <input
+        [disabled]="disabled"
         type="date"
         matInput
         [placeholder]="placeHolder"
@@ -31,6 +32,7 @@ import { MtInputAppearance } from '../../models/enums';
   ],
 })
 export class MtInputDateComponent implements OnInit {
+  @Input() disabled: boolean = false;
   @Input() label: string = 'Material Date Input';
   @Input() placeHolder: string = 'Material Date Input';
   @Input() readonly: boolean = false;

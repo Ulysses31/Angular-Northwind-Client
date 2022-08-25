@@ -65,6 +65,7 @@ export class MtSingleFullComponent
 	@Input() mode: ProgrBarMode = ProgrBarMode.Query;
 	@Input() formTitle: string = '';
 	@Input() formStatus?: EventEmitter<string | null>;
+  @Input() extraActionBarItems: any[] = [];
 	@Input() actionBarItems: ImtActionToolbarItems[] = [
 		{
 			id: 'back',
@@ -114,7 +115,7 @@ export class MtSingleFullComponent
 			disabled: false,
 			command: () => this.viewModel()
 		}
-	];
+	].concat(this.extraActionBarItems);
 
 	constructor(
 		private route: ActivatedRoute,

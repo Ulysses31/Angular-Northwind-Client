@@ -4,8 +4,8 @@ import { NgForm } from '@angular/forms';
 import { OrdersFormViewModelService } from './orders-form-viewmodel.service';
 
 @Component({
-  templateUrl: './Orders-form.component.html',
-  styleUrls: ['./Orders-form.component.css']
+  templateUrl: './orders-form.component.html',
+  styleUrls: ['./orders-form.component.css']
 })
 export class OrdersFormComponent extends AppBaseComponent {
   formTitle: string = 'Orders Form';
