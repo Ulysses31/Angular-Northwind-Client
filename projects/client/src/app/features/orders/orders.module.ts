@@ -9,17 +9,29 @@ import { OrdersComponent } from './orders.component';
 import { OrdersService } from './orders.service';
 import { OrdersFullFormViewModelService } from './orders-full-form/orders-full-form-viewmodel.service';
 import { OrdersFullFormComponent } from './orders-full-form/orders-full-form.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-	declarations: [OrdersComponent, OrdersFormComponent, OrdersFullFormComponent],
-	imports: [SharedModule, OrdersRoutingModule],
+	declarations: [
+		OrdersComponent,
+		OrdersFormComponent,
+		OrdersFullFormComponent
+	],
+	imports: [
+		SharedModule,
+		OrdersRoutingModule,
+		MatToolbarModule,
+		MatIconModule,
+    MatTooltipModule
+	],
 	providers: [
 		OrdersService,
-    OrdersFullService,
+		OrdersFullService,
 		OrdersViewModelService,
 		OrdersFormViewModelService,
-    OrdersFullFormViewModelService
+		OrdersFullFormViewModelService
 	]
 })
 export class OrdersModule {}
-

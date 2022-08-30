@@ -127,6 +127,31 @@
 
 <br />
 
+<!-- Toolbar -->
+<div class="action-toolbar mat-elevation-z5">
+  <mat-toolbar [color]="color">
+    <span style="color: #bebebe">{{ formTitle }}</span>
+    <span class="example-spacer"></span>
+    <button
+      *ngFor="let btn of actionBarItems"
+      mat-icon-button
+      class="example-icon favorite-icon"
+      aria-label="btn.id"
+      [matTooltip]="btn.toolTipMessage"
+      [matTooltipPosition]="tipPosition"
+      [matTooltipShowDelay]="1000"
+      (click)="btn?.command()"
+      [disabled]="btn.disabled">
+      <mat-icon>{{
+        btn.icon
+      }}</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+<!-- Toolbar -->
+
+<br />
+
 <!-- Table -->
 <mt-table
   #orderDetailsTable
